@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react'
 import { useSettings } from './useSettings.ts'
 import { Button, Flex } from '@radix-ui/themes'
-import { NoteSelector } from './NoteSelector.tsx'
 import { DEFAULT_STRING_NOTES } from '../../common/constants.ts'
 import { Note } from '../../common/types.ts'
+import { StringNoteSelector } from './selectors/StringNoteSelector.tsx'
 
 const getNewTuning = (prevTuning: Note[], action: 'add' | 'remove') => {
     if (action === 'remove') {
@@ -35,7 +35,7 @@ export const Tuning = React.memo(() => {
         <Flex direction="column" gap="3">
             <Flex gap="3">
                 {tuning.map((note, index) => (
-                    <NoteSelector
+                    <StringNoteSelector
                         key={`${note}_${index}`}
                         stringIndex={index}
                     />

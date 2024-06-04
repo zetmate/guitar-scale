@@ -3,7 +3,7 @@ import { NUMBER_OF_FRETS } from '../../common/constants.ts'
 import { getIntervalNoteFrom } from '../../common/utils.ts'
 import { Text } from '@radix-ui/themes'
 import { Fret } from './Fret.tsx'
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { Row } from './Grid/Row.tsx'
 
 interface StringProps {
@@ -21,7 +21,7 @@ const getFretboard = (stringNote: Note) => {
     return result
 }
 
-export const String = ({ stringNote }: StringProps) => {
+export const String = React.memo(({ stringNote }: StringProps) => {
     const fretboard = useMemo(() => getFretboard(stringNote), [stringNote])
     return (
         <Row
@@ -33,4 +33,4 @@ export const String = ({ stringNote }: StringProps) => {
             }))}
         </Row>
     )
-}
+})
