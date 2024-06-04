@@ -40,14 +40,14 @@ export type ScaleSchema = [
 
 export type ScaleNotes = [Note, Note, Note, Note, Note, Note, Note]
 
-export enum Scales {
+export enum Scale {
     Major = 'major',
     NaturalMinor = 'natural minor',
-    HarmonicMinor = 'harmonic minor',
-    Phrygian = 'phrygian',
-    Locrian = 'locrian',
-    Lydian = 'lydian',
-    Dorian = 'dorian',
+    // HarmonicMinor = 'harmonic minor',
+    // Phrygian = 'phrygian',
+    // Locrian = 'locrian',
+    // Lydian = 'lydian',
+    // Dorian = 'dorian',
 }
 
 export type Color = 'green' | 'blue' | 'orange' | 'yellow' | 'pink' | 'violet'

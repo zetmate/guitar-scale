@@ -1,11 +1,10 @@
-import { Note } from '../../common/types.ts'
 import { Box, Flex, ScrollArea } from '@radix-ui/themes'
 import { String } from './String.tsx'
 import { FretNumberIndication } from './FretNumberIndication.tsx'
-
-const tuning = [Note.E, Note.B, Note.G, Note.D, Note.A, Note.E]
+import { useSettings } from '../Settings/useSettings.ts'
 
 export const Fretboard = () => {
+    const { tuning } = useSettings()
     return (
         <ScrollArea type="always" scrollbars="horizontal">
             <Box px="2" pb="6">
