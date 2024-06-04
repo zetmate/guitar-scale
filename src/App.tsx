@@ -1,13 +1,5 @@
-import {
-    Box,
-    Container,
-    Flex,
-    Heading,
-    ScrollArea,
-    Section,
-} from '@radix-ui/themes'
-import { Note } from './common/types.ts'
-import { String } from './components/String.tsx'
+import { Container, Heading, Section } from '@radix-ui/themes'
+import { Fretboard } from './components/Fretboard.tsx'
 
 function App() {
     return (
@@ -18,14 +10,7 @@ function App() {
                 </Heading>
             </Section>
             <Section>
-                <ScrollArea type="always" scrollbars="horizontal">
-                    <Box px="2" py="6">
-                        <Flex direction="column" gapY="2">
-                            <String stringNote={Note.A} />
-                            <String stringNote={Note.E} />
-                        </Flex>
-                    </Box>
-                </ScrollArea>
+                <Fretboard />
             </Section>
         </Container>
     )

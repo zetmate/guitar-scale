@@ -1,7 +1,7 @@
 import { Note, noteName } from '../common/types.ts'
 import { NUMBER_OF_FRETS } from '../common/constants.ts'
 import { getIntervalNoteFrom } from '../common/utils.ts'
-import { Flex } from '@radix-ui/themes'
+import { Box, Flex, Text } from '@radix-ui/themes'
 import { Fret } from './Fret.tsx'
 import { useMemo } from 'react'
 
@@ -23,7 +23,10 @@ const getFretboard = (stringNote: Note) => {
 export const String = ({ stringNote }: StringProps) => {
     const fretboard = useMemo(() => getFretboard(stringNote), [stringNote])
     return (
-        <Flex gap="2" flexShrink="0">
+        <Flex gap="2" flexShrink="0" align="center">
+            <Box pr="2" flexShrink="0" width="2vh">
+                <Text weight="bold">{noteName[stringNote]}</Text>
+            </Box>
             {fretboard.map((note, index) => (
                 <Fret key={`${index}_${noteName[note]}`} note={note} />
             ))}

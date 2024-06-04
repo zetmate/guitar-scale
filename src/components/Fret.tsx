@@ -12,7 +12,7 @@ export const Fret = ({ note, color }: FretProps) => {
             <Card>
                 <Flex
                     width="7vh"
-                    height="10vh"
+                    height="3vh"
                     flexShrink="0"
                     justify="center"
                     align="center"
