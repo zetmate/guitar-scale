@@ -1,8 +1,9 @@
 import { Color, Note, Scale } from '../../common/types.ts'
 import React, { PropsWithChildren, useMemo, useState } from 'react'
 import { getScaleNotes } from '../../common/utils.ts'
+import { useLocalStorage } from '../LocalStorage/context.tsx'
 
-interface Settings {
+export interface Settings {
     tuning: Note[]
     color: {
         default: Color
@@ -60,11 +61,19 @@ export const SettingsContext =
     React.createContext<SettingsContextValue>(defaultContextValue)
 
 export const SettingsProvider = ({ children }: PropsWithChildren) => {
-    const [settings, setSettings] = useState<Settings>(defaultSettings)
+    const { settings: savedSettings, updateSettings } = useLocalStorage()
+    const [settings, setSettings] = useState<Settings>(
+        savedSettings || defaultSettings
+    )
 
     const value: SettingsContextValue = useMemo(
-        () => contextValueFromSettings(settings, setSettings),
-        [settings, setSettings]
+        () =>
+            contextValueFromSettings(settings, (updater) => {
+                const newSettings = updater(settings)
+                updateSettings(newSettings)
+                setSettings(newSettings)
+            }),
+        [settings, setSettings, updateSettings]
     )
 
     return (

@@ -41,7 +41,7 @@ export const Selector = <T,>({
                             </Text>
                         </Box>
                     )}
-                    <Button variant="soft" color={color}>
+                    <Button variant="soft" color={color || 'gray'}>
                         {(buttonText && buttonText + ': ') || ''}
                         {getItemText(value)}
                         <DropdownMenu.TriggerIcon />

@@ -67,7 +67,11 @@ export const ScaleForm = () => {
                     <Box flexShrink="0" pr="2">
                         <Text size="2">Show all notes</Text>
                     </Box>
-                    <Switch checked={showAllNotes} onCheckedChange={onSwitch} />
+                    <Switch
+                        variant="soft"
+                        checked={showAllNotes}
+                        onCheckedChange={onSwitch}
+                    />
                 </Flex>
             </Flex>
         </Flex>
