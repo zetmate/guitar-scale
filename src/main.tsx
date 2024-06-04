@@ -1,10 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import './reset.css'
+import '@radix-ui/themes/styles.css'
+import { Theme } from '@radix-ui/themes'
 import App from './App.tsx'
-import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const Root = () => (
     <React.StrictMode>
-        <App />
+        <Theme accentColor="grass" appearance="dark">
+            <App />
+        </Theme>
     </React.StrictMode>
 )
+
+ReactDOM.createRoot(document.getElementById('root')!).render(<Root />)
