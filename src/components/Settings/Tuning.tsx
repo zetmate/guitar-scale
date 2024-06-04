@@ -1,7 +1,11 @@
 import React, { useCallback } from 'react'
 import { useSettings } from './useSettings.ts'
 import { Button, Flex } from '@radix-ui/themes'
-import { DEFAULT_STRING_NOTES } from '../../common/constants.ts'
+import {
+    DEFAULT_STRING_NOTES,
+    MAX_STRINGS,
+    MIN_STRINGS,
+} from '../../common/constants.ts'
 import { Note } from '../../common/types.ts'
 import { StringNoteSelector } from './selectors/StringNoteSelector.tsx'
 
@@ -46,6 +50,7 @@ export const Tuning = React.memo(() => {
                     variant="soft"
                     color="red"
                     onClick={() => onStringsChange('remove')}
+                    disabled={tuning.length <= MIN_STRINGS}
                 >
                     Remove
                 </Button>
@@ -53,6 +58,7 @@ export const Tuning = React.memo(() => {
                     variant="soft"
                     color="blue"
                     onClick={() => onStringsChange('add')}
+                    disabled={tuning.length >= MAX_STRINGS}
                 >
                     Add
                 </Button>

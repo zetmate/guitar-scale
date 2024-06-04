@@ -9,7 +9,7 @@ export const DEFAULT_STRING_NOTES = [
     Note.E,
     Note.B,
     Note.E,
-]
+] as const
 
 export const OCTAVE = 12
 export const NUMBER_OF_FRETS = 15
@@ -26,7 +26,7 @@ export const ALL_NOTES = [
     Note['F#/Gb'],
     Note.G,
     Note['G#/Ab'],
-]
+] as const
 
 export const ALL_SCALES = [Scale.Major, Scale.NaturalMinor]
 
@@ -37,6 +37,9 @@ export const ALL_COLORS: Color[] = [
     'yellow',
     'pink',
     'violet',
-]
+] as const
+
+export const MAX_STRINGS = DEFAULT_STRING_NOTES.length
+export const MIN_STRINGS = 4
 
 export const ICON_SIZE = 32
