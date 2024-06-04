@@ -1,13 +1,13 @@
 import { Note, Scale, ScaleNotes } from './types.ts'
 import { OCTAVE } from './constants.ts'
-import { scaleToSchema } from './scales.ts'
+import { scaleSchema } from './scales.ts'
 
 export const getIntervalNoteFrom = (note: Note, semitones: number): Note => {
     return (note + semitones) % OCTAVE
 }
 
 export const getScaleNotes = (root: Note, scale: Scale): ScaleNotes => {
-    const schema = scaleToSchema[scale]
+    const schema = scaleSchema[scale]
 
     let nextNote = root
     const result: Note[] = []

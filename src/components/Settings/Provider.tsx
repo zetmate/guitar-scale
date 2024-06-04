@@ -10,6 +10,8 @@ interface Settings {
     }
 }
 
+type SettingsUpdater = (prevSettings: Settings) => Settings
+
 interface SettingsContextValue {
     tuning: Note[]
     scale: {
@@ -17,7 +19,7 @@ interface SettingsContextValue {
         type: Scale
         notes: Note[]
     }
-    setSettings: (newSettings: Settings) => void
+    setSettings: (updater: SettingsUpdater) => void
 }
 
 const defaultSettings: Settings = {
