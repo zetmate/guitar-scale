@@ -4,47 +4,48 @@ import { useSettings } from './useSettings.ts'
 import { NoteSelector } from './selectors/NoteSelector.tsx'
 import { Selector } from './selectors/Selector.tsx'
 import { ALL_COLORS, ALL_SCALES } from '../../common/constants.ts'
-import { Flex } from '@radix-ui/themes'
+import { Box, Flex, Switch, Text } from '@radix-ui/themes'
 
 export const ScaleForm = () => {
-    const { scale, color, setSettings } = useSettings()
-    const value = scale.root
+    const { scale, color, showAllNotes, setSettings } = useSettings()
 
-    const onSelectScale = useCallback(
-        (root: Note, type: Scale) => {
-            setSettings((prevSettings) => {
-                return {
-                    ...prevSettings,
-                    scale: {
-                        root,
-                        type,
-                    },
-                }
-            })
-        },
-        [setSettings]
-    )
+    const onSelectScale = (root: Note, type: Scale) => {
+        setSettings((prevSettings) => {
+            return {
+                ...prevSettings,
+                scale: {
+                    root,
+                    type,
+                },
+            }
+        })
+    }
+    const onSelectColor = (color: Color) => {
+        setSettings((prevSettings) => {
+            return {
+                ...prevSettings,
+                color: {
+                    default: color,
+                },
+            }
+        })
+    }
 
-    const onSelectColor = useCallback(
-        (color: Color) => {
-            setSettings((prevSettings) => {
-                return {
-                    ...prevSettings,
-                    color: {
-                        default: color,
-                    },
-                }
-            })
-        },
-        [setSettings]
-    )
+    const onSwitch = (checked: boolean) => {
+        setSettings((prevSettings) => {
+            return {
+                ...prevSettings,
+                showAllNotes: checked,
+            }
+        })
+    }
 
     return (
         <Flex direction="column" gap="3">
             <Flex direction="row" gap="3">
                 <NoteSelector
                     onSelect={(note) => onSelectScale(note, scale.type)}
-                    value={value}
+                    value={scale.root}
                 />
                 <Selector<Scale>
                     value={scale.type}
@@ -63,6 +64,12 @@ export const ScaleForm = () => {
                     color={color.default}
                     getItemColor={(item) => item}
                 />
+                <Flex flexShrink="0" align="center">
+                    <Box flexShrink="0" pr="2">
+                        <Text size="2">Show all notes</Text>
+                    </Box>
+                    <Switch checked={showAllNotes} onCheckedChange={onSwitch} />
+                </Flex>
             </Flex>
         </Flex>
     )

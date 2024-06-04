@@ -1,22 +1,29 @@
 import { Badge, Text } from '@radix-ui/themes'
-import { Color, Note, noteName } from '../../common/types.ts'
+import { Note, noteName } from '../../common/types.ts'
 import { Cell } from './Grid/Cell.tsx'
+import { useSettings } from '../Settings/useSettings.ts'
+import React from 'react'
 
 interface FretProps {
     note: Note
-    color?: Color
 }
 
-export const Fret = ({ note, color }: FretProps) => {
+export const Fret = React.memo(({ note }: FretProps) => {
+    const {
+        scale: { notesSet },
+        color,
+        showAllNotes,
+    } = useSettings()
+    const noteColor = notesSet.has(note) ? color.default : undefined
     return (
         <Cell>
-            {color ? (
-                <Badge size="3" color={color || 'gray'}>
+            {noteColor ? (
+                <Badge size="3" color={noteColor || 'gray'}>
                     {noteName[note]}
                 </Badge>
             ) : (
-                <Text size="2">{noteName[note]}</Text>
+                showAllNotes && <Text size="1">{noteName[note]}</Text>
             )}
         </Cell>
     )
-}
+})

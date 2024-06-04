@@ -7,6 +7,7 @@ interface Settings {
     color: {
         default: Color
     }
+    showAllNotes: boolean
     scale: {
         root: Note
         type: Scale
@@ -20,12 +21,14 @@ interface SettingsContextValue extends Settings {
         root: Note
         type: Scale
         notes: Note[]
+        notesSet: Set<Note>
     }
     setSettings: (updater: SettingsUpdater) => void
 }
 
 const defaultSettings: Settings = {
     tuning: [Note.E, Note.B, Note.G, Note.D, Note.A, Note.E],
+    showAllNotes: false,
     color: {
         default: 'blue',
     },
@@ -38,14 +41,18 @@ const defaultSettings: Settings = {
 const contextValueFromSettings = (
     settings: Settings,
     setSettings: SettingsContextValue['setSettings']
-) => ({
-    ...settings,
-    scale: {
-        ...settings.scale,
-        notes: getScaleNotes(settings.scale.root, settings.scale.type),
-    },
-    setSettings,
-})
+): SettingsContextValue => {
+    const notes = getScaleNotes(settings.scale.root, settings.scale.type)
+    return {
+        ...settings,
+        scale: {
+            ...settings.scale,
+            notes,
+            notesSet: new Set<Note>(notes),
+        },
+        setSettings,
+    }
+}
 
 const defaultContextValue = contextValueFromSettings(defaultSettings, () => {})
 

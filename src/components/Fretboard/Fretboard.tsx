@@ -7,7 +7,7 @@ import { useSettings } from '../Settings/useSettings.ts'
 export const Fretboard = React.memo(() => {
     const { tuning } = useSettings()
     return (
-        <ScrollArea type="always" scrollbars="horizontal">
+        <ScrollArea size="2" type="always" scrollbars="horizontal">
             <Box pb="6">
                 <Flex direction="column" gapY="2">
                     {tuning.map((stringNote, index) => (
