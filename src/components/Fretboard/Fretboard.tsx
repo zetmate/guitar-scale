@@ -1,13 +1,14 @@
+import React from 'react'
 import { Box, Flex, ScrollArea } from '@radix-ui/themes'
 import { String } from './String.tsx'
 import { FretNumberIndication } from './FretNumberIndication.tsx'
 import { useSettings } from '../Settings/useSettings.ts'
 
-export const Fretboard = () => {
+export const Fretboard = React.memo(() => {
     const { tuning } = useSettings()
     return (
         <ScrollArea type="always" scrollbars="horizontal">
-            <Box px="2" pb="6">
+            <Box pb="6">
                 <Flex direction="column" gapY="2">
                     {tuning.map((stringNote, index) => (
                         <String
@@ -20,4 +21,4 @@ export const Fretboard = () => {
             </Box>
         </ScrollArea>
     )
-}
+})

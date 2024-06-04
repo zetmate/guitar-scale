@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { Button, DropdownMenu } from '@radix-ui/themes'
+import { Box, Button, DropdownMenu, Flex, Text } from '@radix-ui/themes'
 import { Note, noteName } from '../../common/types.ts'
 import { ALL_NOTES } from '../../common/constants.ts'
 import { useSettings } from './useSettings.ts'
@@ -30,10 +30,17 @@ export const NoteSelector = React.memo(({ stringIndex }: NoteSelectorProps) => {
     return (
         <DropdownMenu.Root>
             <DropdownMenu.Trigger>
-                <Button variant="soft">
-                    {noteName[value]}
-                    <DropdownMenu.TriggerIcon />
-                </Button>
+                <Flex direction="column" align="start">
+                    <Box flexShrink="0" pb="2">
+                        <Text weight="medium" size="2">
+                            Str {stringIndex + 1}
+                        </Text>
+                    </Box>
+                    <Button variant="soft">
+                        {noteName[value]}
+                        <DropdownMenu.TriggerIcon />
+                    </Button>
+                </Flex>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content>
                 {ALL_NOTES.map((note) => (

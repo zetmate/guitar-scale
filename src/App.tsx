@@ -1,19 +1,25 @@
-import { Container, Section } from '@radix-ui/themes'
+import { Box, Flex, Heading, Section, Text } from '@radix-ui/themes'
 import { Fretboard } from './components/Fretboard/Fretboard.tsx'
 import { SettingsProvider } from './components/Settings/Provider.tsx'
-import { NoteSelector } from './components/Settings/NoteSelector.tsx'
+import { Settings } from './components/Settings'
 
 function App() {
     return (
         <SettingsProvider>
-            <Container>
-                <Section>
+            <Section px="8">
+                <Flex gapY="9" direction="column">
+                    <Flex justify="start" align="center" gapX="3">
+                        <Heading as="h1" size="8">
+                            guitar-scale
+                        </Heading>
+                        <Box>
+                            <Text>by zetmate</Text>
+                        </Box>
+                    </Flex>
+                    <Settings />
                     <Fretboard />
-                </Section>
-                <Section>
-                    <NoteSelector stringIndex={0} />
-                </Section>
-            </Container>
+                </Flex>
+            </Section>
         </SettingsProvider>
     )
 }
