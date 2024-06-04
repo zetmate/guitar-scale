@@ -13,7 +13,7 @@ import { PuffLoader } from 'react-spinners'
 interface LocalStorage {
     theme?: ThemeMode
     settings?: Settings
-    updateTheme: (value: ThemeMode) => void
+    updateTheme: (value?: ThemeMode) => void
     updateSettings: (settings: Settings) => void
 }
 
@@ -50,8 +50,12 @@ export const LocalStorageProvider = ({ children }: PropsWithChildren) => {
         localStorage.setItem(SETTINGS_KEY, JSON.stringify(newSettings))
     }, [])
 
-    const updateTheme = useCallback((newTheme: ThemeMode) => {
-        localStorage.setItem(THEME_KEY, JSON.stringify(newTheme))
+    const updateTheme = useCallback((newTheme?: ThemeMode) => {
+        if (newTheme) {
+            localStorage.setItem(THEME_KEY, JSON.stringify(newTheme))
+        } else {
+            localStorage.removeItem(THEME_KEY)
+        }
     }, [])
 
     const value = useMemo(

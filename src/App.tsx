@@ -17,7 +17,7 @@ export const App = React.memo(() => {
     const onThemeChange = useCallback(
         (newTheme: ThemeMode) => {
             setTheme(newTheme)
-            saveToStorage(newTheme)
+            saveToStorage(newTheme !== defaultTheme ? newTheme : undefined)
         },
         [setTheme, saveToStorage]
     )
