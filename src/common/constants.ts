@@ -30,7 +30,7 @@ export const ALL_NOTES = [
 
 export const ALL_SCALES = [Scale.Major, Scale.NaturalMinor]
 
-export const ALL_COLORS: Color[] = [
+export const ALL_COLORS: readonly Color[] = [
     'green',
     'blue',
     'orange',

@@ -13,7 +13,7 @@ interface SelectorProps<T> {
     value?: T
     label?: string
     onSelect: (note: T) => void
-    items: T[]
+    items: readonly T[]
     getItemText?: (item?: T) => string
     getItemColor?: (item?: T) => Color | undefined
     color?: ButtonProps['color']
