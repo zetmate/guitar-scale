@@ -7,9 +7,12 @@ import { ThemeMode } from './common/types.ts'
 import { Header } from './components/Header'
 import { useLocalStorage } from './components/LocalStorage/context.tsx'
 
+const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+const defaultTheme: ThemeMode = preferDark ? 'dark' : 'light'
+
 export const App = React.memo(() => {
     const { updateTheme: saveToStorage, theme: savedTheme } = useLocalStorage()
-    const [theme, setTheme] = useState<ThemeMode>(savedTheme || 'light')
+    const [theme, setTheme] = useState<ThemeMode>(savedTheme || defaultTheme)
 
     const onThemeChange = useCallback(
         (newTheme: ThemeMode) => {
