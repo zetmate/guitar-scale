@@ -27,3 +27,9 @@ export const degreeToIndex = (degree: number): number => {
 export const indexToDegree = (index: number): number => {
     return index + 1
 }
+
+export const capitalize = (str: string) => {
+    const arr = str.split('')
+    arr[0] = arr[0].toUpperCase()
+    return arr.join('')
+}

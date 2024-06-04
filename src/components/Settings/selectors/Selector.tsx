@@ -1,11 +1,23 @@
-import { Box, Button, DropdownMenu, Flex, Text } from '@radix-ui/themes'
+import {
+    Box,
+    Button,
+    DropdownMenu,
+    Flex,
+    Text,
+    ButtonProps,
+} from '@radix-ui/themes'
+import { Color } from '../../../common/types.ts'
+import { capitalize } from '../../../common/utils.ts'
 
 interface SelectorProps<T> {
     value?: T
     label?: string
     onSelect: (note: T) => void
     items: T[]
-    getItemText: (item?: T) => string
+    getItemText?: (item?: T) => string
+    getItemColor?: (item?: T) => Color | undefined
+    color?: ButtonProps['color']
+    buttonText?: string
 }
 
 export const Selector = <T,>({
@@ -13,7 +25,10 @@ export const Selector = <T,>({
     value,
     label,
     items,
-    getItemText,
+    getItemText = (item) => capitalize(`${item}`),
+    getItemColor = () => undefined,
+    color,
+    buttonText,
 }: SelectorProps<T>) => {
     return (
         <DropdownMenu.Root>
@@ -26,7 +41,8 @@ export const Selector = <T,>({
                             </Text>
                         </Box>
                     )}
-                    <Button variant="soft">
+                    <Button variant="soft" color={color}>
+                        {(buttonText && buttonText + ': ') || ''}
                         {getItemText(value)}
                         <DropdownMenu.TriggerIcon />
                     </Button>
@@ -38,6 +54,7 @@ export const Selector = <T,>({
                     return (
                         <DropdownMenu.Item
                             key={itemText}
+                            color={getItemColor(item)}
                             onClick={() => onSelect(item)}
                         >
                             {itemText}

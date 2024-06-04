@@ -1,9 +1,12 @@
-import { Note, Scale } from '../../common/types.ts'
+import { Color, Note, Scale } from '../../common/types.ts'
 import React, { PropsWithChildren, useMemo, useState } from 'react'
 import { getScaleNotes } from '../../common/utils.ts'
 
 interface Settings {
     tuning: Note[]
+    color: {
+        default: Color
+    }
     scale: {
         root: Note
         type: Scale
@@ -12,8 +15,7 @@ interface Settings {
 
 type SettingsUpdater = (prevSettings: Settings) => Settings
 
-interface SettingsContextValue {
-    tuning: Note[]
+interface SettingsContextValue extends Settings {
     scale: {
         root: Note
         type: Scale
@@ -24,6 +26,9 @@ interface SettingsContextValue {
 
 const defaultSettings: Settings = {
     tuning: [Note.E, Note.B, Note.G, Note.D, Note.A, Note.E],
+    color: {
+        default: 'blue',
+    },
     scale: {
         root: Note.A,
         type: Scale.NaturalMinor,

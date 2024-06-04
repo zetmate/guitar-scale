@@ -33,7 +33,7 @@ export const Tuning = React.memo(() => {
 
     return (
         <Flex direction="column" gap="3">
-            <Flex gap="3">
+            <Flex gap="3" direction="row-reverse">
                 {tuning.map((note, index) => (
                     <StringNoteSelector
                         key={`${note}_${index}`}

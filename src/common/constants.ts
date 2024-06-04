@@ -1,4 +1,4 @@
-import { Note } from './types.ts'
+import { Color, Note, Scale } from './types.ts'
 
 export const DEFAULT_STRING_NOTES = [
     Note.E,
@@ -26,4 +26,15 @@ export const ALL_NOTES = [
     Note['F#/Gb'],
     Note.G,
     Note['G#/Ab'],
+]
+
+export const ALL_SCALES = [Scale.Major, Scale.NaturalMinor]
+
+export const ALL_COLORS: Color[] = [
+    'green',
+    'blue',
+    'orange',
+    'yellow',
+    'pink',
+    'violet',
 ]

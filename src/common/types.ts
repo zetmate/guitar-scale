@@ -41,8 +41,8 @@ export type ScaleSchema = [
 export type ScaleNotes = [Note, Note, Note, Note, Note, Note, Note]
 
 export enum Scale {
-    Major = 'major',
-    NaturalMinor = 'natural minor',
+    Major = 'Major',
+    NaturalMinor = 'Minor',
     // HarmonicMinor = 'harmonic minor',
     // Phrygian = 'phrygian',
     // Locrian = 'locrian',

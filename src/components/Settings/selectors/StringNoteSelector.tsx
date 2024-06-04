@@ -27,12 +27,6 @@ export const StringNoteSelector = React.memo(
             [stringIndex, setSettings]
         )
 
-        return (
-            <NoteSelector
-                onSelect={onSelect}
-                value={value}
-                label={`Str ${stringIndex + 1}`}
-            />
-        )
+        return <NoteSelector onSelect={onSelect} value={value} />
     }
 )
