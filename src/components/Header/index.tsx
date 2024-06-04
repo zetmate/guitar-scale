@@ -1,6 +1,8 @@
 import React from 'react'
-import { Box, Flex, Heading, Text } from '@radix-ui/themes'
+import { Box, Flex, Heading, IconButton, Text } from '@radix-ui/themes'
 import { ThemeButton, ThemeButtonProps } from './ThemeButton.tsx'
+import { GitHubLogoIcon } from '@radix-ui/react-icons'
+import { ICON_SIZE } from '../../common/constants.ts'
 
 export const Header = React.memo(
     ({ setTheme, currentTheme }: ThemeButtonProps) => (
@@ -13,7 +15,17 @@ export const Header = React.memo(
                     <Text>by zetmate</Text>
                 </Box>
             </Box>
-            <ThemeButton setTheme={setTheme} currentTheme={currentTheme} />
+            <Flex align="center" gap="4">
+                <ThemeButton setTheme={setTheme} currentTheme={currentTheme} />
+                <a
+                    href="https://github.com/zetmate/guitar-scale"
+                    target="_blank"
+                >
+                    <IconButton variant="ghost" color="gray">
+                        <GitHubLogoIcon width={ICON_SIZE} height={ICON_SIZE} />
+                    </IconButton>
+                </a>
+            </Flex>
         </Flex>
     )
 )

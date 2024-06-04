@@ -1,14 +1,13 @@
-import { Button } from '@radix-ui/themes'
+import { IconButton } from '@radix-ui/themes'
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons'
 import React, { useCallback } from 'react'
 import { ThemeMode } from '../../common/types.ts'
+import { ICON_SIZE } from '../../common/constants.ts'
 
 export interface ThemeButtonProps {
     currentTheme: ThemeMode
     setTheme: (theme: ThemeMode) => void
 }
-
-const ICON_SIZE = 32
 
 export const ThemeButton = React.memo(
     ({ currentTheme, setTheme }: ThemeButtonProps) => {
@@ -23,13 +22,21 @@ export const ThemeButton = React.memo(
         return (
             <>
                 {currentTheme === 'dark' ? (
-                    <Button color="gray" variant="ghost" onClick={onSunClick}>
-                        <MoonIcon height={ICON_SIZE} width={ICON_SIZE} />
-                    </Button>
-                ) : (
-                    <Button color="gray" variant="ghost" onClick={onMoonClick}>
+                    <IconButton
+                        color="gray"
+                        variant="ghost"
+                        onClick={onSunClick}
+                    >
                         <SunIcon height={ICON_SIZE} width={ICON_SIZE} />
-                    </Button>
+                    </IconButton>
+                ) : (
+                    <IconButton
+                        color="gray"
+                        variant="ghost"
+                        onClick={onMoonClick}
+                    >
+                        <MoonIcon height={ICON_SIZE} width={ICON_SIZE} />
+                    </IconButton>
                 )}
             </>
         )

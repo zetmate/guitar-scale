@@ -38,3 +38,5 @@ export const ALL_COLORS: Color[] = [
     'pink',
     'violet',
 ]
+
+export const ICON_SIZE = 32
