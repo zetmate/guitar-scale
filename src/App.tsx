@@ -1,27 +1,24 @@
-import { Box, Flex, Heading, Section, Text } from '@radix-ui/themes'
+import { Flex, Section, Theme } from '@radix-ui/themes'
 import { Fretboard } from './components/Fretboard/Fretboard.tsx'
 import { SettingsProvider } from './components/Settings/Provider.tsx'
 import { Settings } from './components/Settings'
+import React, { useState } from 'react'
+import { ThemeMode } from './common/types.ts'
+import { Header } from './components/Header'
 
-function App() {
+export const App = React.memo(() => {
+    const [theme, setTheme] = useState<ThemeMode>('light')
     return (
-        <SettingsProvider>
-            <Section px="8">
-                <Flex gapY="9" direction="column">
-                    <Flex justify="start" align="center" gapX="3">
-                        <Heading as="h1" size="8">
-                            guitar-scale
-                        </Heading>
-                        <Box>
-                            <Text>by zetmate</Text>
-                        </Box>
+        <Theme accentColor="grass" appearance={theme}>
+            <SettingsProvider>
+                <Section px="8">
+                    <Flex gapY="7" direction="column">
+                        <Header setTheme={setTheme} currentTheme={theme} />
+                        <Settings />
+                        <Fretboard />
                     </Flex>
-                    <Settings />
-                    <Fretboard />
-                </Flex>
-            </Section>
-        </SettingsProvider>
+                </Section>
+            </SettingsProvider>
+        </Theme>
     )
-}
-
-export default App
+})

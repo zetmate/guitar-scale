@@ -51,3 +51,5 @@ export enum Scale {
 }
 
 export type Color = 'green' | 'blue' | 'orange' | 'yellow' | 'pink' | 'violet'
+
+export type ThemeMode = 'light' | 'dark'

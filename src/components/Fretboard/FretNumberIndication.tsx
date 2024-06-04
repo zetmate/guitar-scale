@@ -20,7 +20,7 @@ const Dot = () => {
                 height: '1vh',
                 flexShrink: '0',
                 borderRadius: '100%',
-                background: mode === 'dark' ? '#ddd' : '#333',
+                background: mode === 'dark' ? '#bbb' : '#555',
             }}
         />
     )
