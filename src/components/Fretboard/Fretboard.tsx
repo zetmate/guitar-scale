@@ -1,4 +1,4 @@
-import { Note } from '../common/types.ts'
+import { Note } from '../../common/types.ts'
 import { Box, Flex, ScrollArea } from '@radix-ui/themes'
 import { String } from './String.tsx'
 import { FretNumberIndication } from './FretNumberIndication.tsx'

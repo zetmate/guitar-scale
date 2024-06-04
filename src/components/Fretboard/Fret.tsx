@@ -1,5 +1,5 @@
 import { Badge, Box, Card, Flex, Text } from '@radix-ui/themes'
-import { Color, Note, noteName } from '../common/types.ts'
+import { Color, Note, noteName } from '../../common/types.ts'
 
 interface FretProps {
     note: Note

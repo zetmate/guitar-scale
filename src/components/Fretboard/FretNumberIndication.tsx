@@ -1,5 +1,5 @@
 import { Box, Card, Flex, useThemeContext } from '@radix-ui/themes'
-import { NUMBER_OF_FRETS } from '../common/constants.ts'
+import { NUMBER_OF_FRETS } from '../../common/constants.ts'
 
 interface Props {
     fretNumber: number
