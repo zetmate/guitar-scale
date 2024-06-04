@@ -1,4 +1,3 @@
-import { useCallback } from 'react'
 import { Color, Note, Scale } from '../../common/types.ts'
 import { useSettings } from './useSettings.ts'
 import { NoteSelector } from './selectors/NoteSelector.tsx'
