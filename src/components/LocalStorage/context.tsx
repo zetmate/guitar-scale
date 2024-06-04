@@ -38,9 +38,9 @@ export const LocalStorageProvider = ({ children }: PropsWithChildren) => {
         if (!isReady) {
             const savedTheme =
                 (localStorage.getItem(THEME_KEY) as ThemeMode) || undefined
-            setTheme(JSON.parse(savedTheme))
+            savedTheme && setTheme(JSON.parse(savedTheme))
             const settingsRaw = localStorage.getItem(SETTINGS_KEY)
-            setSettings(settingsRaw ? JSON.parse(settingsRaw) : undefined)
+            settingsRaw && setSettings(JSON.parse(settingsRaw))
 
             setIsReady(true)
         }
