@@ -1,5 +1,6 @@
-import { Box, Card, Flex, useThemeContext } from '@radix-ui/themes'
+import { Flex, useThemeContext } from '@radix-ui/themes'
 import { NUMBER_OF_FRETS } from '../../common/constants.ts'
+import { Row } from './Grid/Row.tsx'
 
 interface Props {
     fretNumber: number
@@ -15,8 +16,8 @@ const Dot = () => {
     return (
         <div
             style={{
-                width: '2vh',
-                height: '2vh',
+                width: '1vh',
+                height: '1vh',
                 flexShrink: '0',
                 borderRadius: '100%',
                 background: mode === 'dark' ? '#ddd' : '#333',
@@ -33,25 +34,13 @@ const DoubleDot = () => (
 )
 
 const IndicationCell = ({ fretNumber }: Props) => {
-    return (
-        <Box>
-            <Card>
-                <Flex
-                    width="7vh"
-                    height="3vh"
-                    flexShrink="0"
-                    justify="center"
-                    align="center"
-                >
-                    {dot.includes(fretNumber) ? (
-                        <Dot />
-                    ) : doubleDot.includes(fretNumber) ? (
-                        <DoubleDot />
-                    ) : null}
-                </Flex>
-            </Card>
-        </Box>
-    )
+    if (dot.includes(fretNumber)) {
+        return <Dot />
+    }
+    if (doubleDot.includes(fretNumber)) {
+        return <DoubleDot />
+    }
+    return null
 }
 
 const fretboard: number[] = []
@@ -61,11 +50,11 @@ for (let i = 0; i < NUMBER_OF_FRETS; i++) {
 
 export const FretNumberIndication = () => {
     return (
-        <Flex gap="2" flexShrink="0" align="center">
-            <Box pr="2" flexShrink="0" width="2vh" />
-            {fretboard.map((_, index) => (
-                <IndicationCell fretNumber={index + 1} />
-            ))}
-        </Flex>
+        <Row variant="short" firstCellContent={null}>
+            {fretboard.map((_, index) => ({
+                key: index,
+                node: <IndicationCell fretNumber={index + 1} />,
+            }))}
+        </Row>
     )
 }
