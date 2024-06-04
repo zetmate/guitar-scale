@@ -1,4 +1,5 @@
 import { Note, ScaleNotes, ScaleSchema } from './types.ts'
+import { OCTAVE } from './constants.ts'
 
 export const getIntervalNoteFrom = (note: Note, semitones: number): Note => {
     return (note + semitones) % OCTAVE

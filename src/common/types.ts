@@ -13,6 +13,21 @@ export enum Note {
     'G#/Ab',
 }
 
+export const noteName: Record<Note, string> = {
+    [Note.A]: 'A',
+    [Note['A#/Bb']]: 'A#/Bb',
+    [Note.B]: 'B',
+    [Note.C]: 'C',
+    [Note['C#/Db']]: 'C#/Db',
+    [Note.D]: 'D',
+    [Note['D#/Eb']]: 'D#/Eb',
+    [Note.E]: 'E',
+    [Note.F]: 'F',
+    [Note['F#/Gb']]: 'F#/Gb',
+    [Note.G]: 'G',
+    [Note['G#/Ab']]: 'G#/Ab',
+}
+
 export type ScaleSchema = [
     number,
     number,
@@ -34,3 +49,5 @@ export enum Scales {
     Lydian = 'lydian',
     Dorian = 'dorian',
 }
+
+export type Color = 'green' | 'blue' | 'orange' | 'yellow' | 'pink' | 'violet'
