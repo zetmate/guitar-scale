@@ -43,11 +43,11 @@ export type ScaleNotes = [Note, Note, Note, Note, Note, Note, Note]
 export enum Scale {
     Major = 'Major',
     NaturalMinor = 'Minor',
-    // HarmonicMinor = 'harmonic minor',
-    // Phrygian = 'phrygian',
-    // Locrian = 'locrian',
-    // Lydian = 'lydian',
-    // Dorian = 'dorian',
+    HarmonicMinor = 'harmonic minor',
+    Phrygian = 'phrygian',
+    Locrian = 'locrian',
+    Lydian = 'lydian',
+    Dorian = 'dorian',
 }
 
 export type Color = 'green' | 'blue' | 'orange' | 'yellow' | 'pink' | 'violet'

@@ -1,4 +1,4 @@
-import { Color, Note, Scale } from '../../common/types.ts'
+import { Color, Note, noteName, Scale } from '../../common/types.ts'
 import { useSettings } from './useSettings.ts'
 import { NoteSelector } from './selectors/NoteSelector.tsx'
 import { Selector } from './selectors/Selector.tsx'
@@ -53,16 +53,6 @@ export const ScaleForm = () => {
                     }
                     items={ALL_SCALES}
                 />
-            </Flex>
-            <Flex direction="row" gap="3">
-                <Selector<Color>
-                    value={color.default}
-                    onSelect={onSelectColor}
-                    items={ALL_COLORS}
-                    buttonText="Color"
-                    color={color.default}
-                    getItemColor={(item) => item}
-                />
                 <Flex flexShrink="0" align="center">
                     <Box flexShrink="0" pr="2">
                         <Text size="2">Show all notes</Text>
@@ -74,6 +64,21 @@ export const ScaleForm = () => {
                     />
                 </Flex>
             </Flex>
+            <Box py="1">
+                <Text>
+                    {scale.notes.map((note) => noteName[note]).join(' ')}
+                </Text>
+            </Box>
+            {/*<Flex direction="row" gap="3">*/}
+            {/*    <Selector<Color>*/}
+            {/*        value={color.default}*/}
+            {/*        onSelect={onSelectColor}*/}
+            {/*        items={ALL_COLORS}*/}
+            {/*        buttonText="Color"*/}
+            {/*        color={color.default}*/}
+            {/*        getItemColor={(item) => item}*/}
+            {/*    />*/}
+            {/*</Flex>*/}
         </Flex>
     )
 }
