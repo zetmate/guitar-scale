@@ -1,4 +1,4 @@
-import { Color, Note, Scale } from '../../common/types.ts'
+import { AlteredScale, Color, Note, Scale } from '../../common/types.ts'
 import { useSettings } from './useSettings.ts'
 import { NoteSelector } from './selectors/NoteSelector.tsx'
 import { Selector } from './selectors/Selector.tsx'
@@ -8,7 +8,7 @@ import { Box, Flex, Switch, Text } from '@radix-ui/themes'
 export const ScaleForm = () => {
     const { scale, color, showAllNotes, setSettings } = useSettings()
 
-    const onSelectScale = (root: Note, type: Scale) => {
+    const onSelectScale = (root: Note, type: Scale | AlteredScale) => {
         setSettings((prevSettings) => {
             return {
                 ...prevSettings,
@@ -46,7 +46,7 @@ export const ScaleForm = () => {
                     onSelect={(note) => onSelectScale(note, scale.type)}
                     value={scale.root}
                 />
-                <Selector<Scale>
+                <Selector<Scale | AlteredScale>
                     value={scale.type}
                     onSelect={(scaleType) =>
                         onSelectScale(scale.root, scaleType)

@@ -1,4 +1,4 @@
-import { Color, Note, Scale } from './types.ts'
+import { AlteredScale, Color, Note, Scale } from './types.ts'
 
 export const DEFAULT_STRING_NOTES = [
     Note.E,
@@ -28,7 +28,20 @@ export const ALL_NOTES = [
     Note['G#/Ab'],
 ] as const
 
-export const ALL_SCALES = [Scale.Major, Scale.NaturalMinor]
+export const ALL_ALTERED_SCALES = new Set([
+    AlteredScale.HarmonicMinor,
+    AlteredScale.Locrian,
+    AlteredScale.Dorian,
+    AlteredScale.Lydian,
+    AlteredScale.Phrygian,
+    AlteredScale.Mixolydian,
+])
+
+export const ALL_SCALES = [
+    Scale.Major,
+    Scale.NaturalMinor,
+    ...ALL_ALTERED_SCALES,
+]
 
 export const ALL_COLORS: readonly Color[] = [
     'green',

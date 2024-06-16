@@ -1,6 +1,10 @@
-import { Color, Note, Scale } from '../../common/types.ts'
+import { AlteredScale, Color, Note, Scale } from '../../common/types.ts'
 import React, { PropsWithChildren, useMemo, useState } from 'react'
-import { getScaleNotes } from '../../common/utils.ts'
+import {
+    getAlteredScaleNotes,
+    getScaleNotes,
+    isScaleAltered,
+} from '../../common/utils.ts'
 import { useLocalStorage } from '../LocalStorage/context.tsx'
 
 export interface Settings {
@@ -11,16 +15,14 @@ export interface Settings {
     showAllNotes: boolean
     scale: {
         root: Note
-        type: Scale
+        type: Scale | AlteredScale
     }
 }
 
 type SettingsUpdater = (prevSettings: Settings) => Settings
 
 interface SettingsContextValue extends Settings {
-    scale: {
-        root: Note
-        type: Scale
+    scale: Settings['scale'] & {
         notes: Note[]
         notesSet: Set<Note>
     }
@@ -43,7 +45,11 @@ const contextValueFromSettings = (
     settings: Settings,
     setSettings: SettingsContextValue['setSettings']
 ): SettingsContextValue => {
-    const notes = getScaleNotes(settings.scale.root, settings.scale.type)
+    const { type, root } = settings.scale
+    const notes = isScaleAltered(type)
+        ? getAlteredScaleNotes(root, type)
+        : getScaleNotes(settings.scale.root, type)
+
     return {
         ...settings,
         scale: {

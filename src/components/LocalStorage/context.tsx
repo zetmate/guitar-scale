@@ -83,7 +83,14 @@ export const LocalStorageProvider = ({ children }: PropsWithChildren) => {
             hasSeenThePopup,
             setHasSeenThePopup: updateHasSeenValue,
         }),
-        [theme, settings, updateSettings, updateTheme, updateHasSeenValue]
+        [
+            theme,
+            settings,
+            updateSettings,
+            updateTheme,
+            hasSeenThePopup,
+            updateHasSeenValue,
+        ]
     )
 
     if (!isReady || !value) {

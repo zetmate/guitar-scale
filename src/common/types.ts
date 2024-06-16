@@ -67,7 +67,7 @@ export enum Degree {
 export interface IAlteredScale {
     name: AlteredScale
     base: Scale
-    alterations: { degree: Degree; action: 'sharpen' | 'flatten' }[]
+    alterations: Map<Degree, 'flat' | 'sharp'>
 }
 
 export type Color = 'green' | 'blue' | 'orange' | 'yellow' | 'pink' | 'violet'
