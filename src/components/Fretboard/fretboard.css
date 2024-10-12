@@ -1,0 +1,10 @@
+.fretboard {
+    padding: 2px 2px var(--space-6) 2px;
+}
+
+.fretboard__string_cell {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

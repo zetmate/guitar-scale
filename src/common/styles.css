@@ -1,0 +1,7 @@
+.card_light {
+    border: 1px solid var(--gray-6);
+}
+
+.card_dark {
+    background: rgba(255, 255, 255, 0.03);
+}

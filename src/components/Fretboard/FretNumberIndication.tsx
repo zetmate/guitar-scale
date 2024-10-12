@@ -1,4 +1,4 @@
-import { Flex, useThemeContext } from '@radix-ui/themes'
+import { Flex, Text, useThemeContext } from '@radix-ui/themes'
 import { NUMBER_OF_FRETS } from '../../common/constants.ts'
 import { Row } from './Grid/Row.tsx'
 
@@ -40,7 +40,7 @@ const IndicationCell = ({ fretNumber }: Props) => {
     if (doubleDot.includes(fretNumber)) {
         return <DoubleDot />
     }
-    return null
+    return <Text size="1">{fretNumber}</Text>
 }
 
 const fretboard: number[] = []

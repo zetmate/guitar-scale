@@ -30,32 +30,32 @@ export const noteName: Record<Note, string> = {
 
 export const noteNameFlat: Record<Note, string> = {
     [Note.A]: 'A',
-    [Note['A#/Bb']]: 'Bb',
+    [Note['A#/Bb']]: 'B♭',
     [Note.B]: 'B',
     [Note.C]: 'C',
-    [Note['C#/Db']]: 'Db',
+    [Note['C#/Db']]: 'D♭',
     [Note.D]: 'D',
-    [Note['D#/Eb']]: 'Eb',
+    [Note['D#/Eb']]: 'E♭',
     [Note.E]: 'E',
     [Note.F]: 'F',
-    [Note['F#/Gb']]: 'Gb',
+    [Note['F#/Gb']]: 'G♭',
     [Note.G]: 'G',
-    [Note['G#/Ab']]: 'sAb',
+    [Note['G#/Ab']]: 'A♭',
 }
 
 export const noteNameSharp: Record<Note, string> = {
     [Note.A]: 'A',
-    [Note['A#/Bb']]: 'A#',
+    [Note['A#/Bb']]: 'A♯',
     [Note.B]: 'B',
     [Note.C]: 'C',
-    [Note['C#/Db']]: 'C#',
+    [Note['C#/Db']]: 'C♯',
     [Note.D]: 'D',
-    [Note['D#/Eb']]: 'D#',
+    [Note['D#/Eb']]: 'D♯',
     [Note.E]: 'E',
     [Note.F]: 'F',
-    [Note['F#/Gb']]: 'F#',
+    [Note['F#/Gb']]: 'F♯',
     [Note.G]: 'G',
-    [Note['G#/Ab']]: 'G#',
+    [Note['G#/Ab']]: 'G♯',
 }
 
 export type ScaleSchema = [

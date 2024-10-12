@@ -1,0 +1,4 @@
+.group {
+    flex-shrink: 0;
+    padding: var(--space-4);
+}

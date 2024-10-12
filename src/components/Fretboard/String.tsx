@@ -1,10 +1,12 @@
-import { Note, noteName } from '../../common/types.ts'
+import { Note } from '../../common/types.ts'
 import { NUMBER_OF_FRETS } from '../../common/constants.ts'
-import { getIntervalNoteFrom } from '../../common/utils.ts'
-import { Text } from '@radix-ui/themes'
+import { getIntervalNoteFrom, getNoteName } from '../../common/utils.ts'
+import { Badge, Text } from '@radix-ui/themes'
 import { Fret } from './Fret.tsx'
 import React, { useMemo } from 'react'
 import { Row } from './Grid/Row.tsx'
+import { useSettings } from '../Settings/useSettings.ts'
+import './fretboard.css'
 
 interface StringProps {
     stringNote: Note
@@ -22,13 +24,29 @@ const getFretboard = (stringNote: Note) => {
 }
 
 export const String = React.memo(({ stringNote }: StringProps) => {
+    const { scale, color } = useSettings()
     const fretboard = useMemo(() => getFretboard(stringNote), [stringNote])
+    const noteName = getNoteName(stringNote, scale.preferredNaming)
+    const isHighlighted = scale.notesSet.has(stringNote)
+
     return (
         <Row
-            firstCellContent={<Text weight="bold">{noteName[stringNote]}</Text>}
+            firstCellContent={
+                <div className="fretboard__string_cell">
+                    {isHighlighted ? (
+                        <Badge size="2" color={color.default}>
+                            {noteName}
+                        </Badge>
+                    ) : (
+                        <Text size="2" color="gray" weight="bold">
+                            {noteName}
+                        </Text>
+                    )}
+                </div>
+            }
         >
             {fretboard.map((note, index) => ({
-                key: `${index}_${noteName[note]}`,
+                key: `${index}_${noteName}`,
                 node: <Fret note={note} />,
             }))}
         </Row>

@@ -8,13 +8,15 @@ interface RowProps {
     variant?: 'regular' | 'short'
 }
 
-export const Row = React.memo(({ children, variant = 'regular' }: RowProps) => (
-    <Flex gap="2" flexShrink="0" align="center">
-        {/*<Cell variant="narrow">{firstCellContent}</Cell>*/}
-        {children.map(({ key, node }) => (
-            <Cell key={key} variant={variant}>
-                {node}
-            </Cell>
-        ))}
-    </Flex>
-))
+export const Row = React.memo(
+    ({ children, variant = 'regular', firstCellContent }: RowProps) => (
+        <Flex gap="2" flexShrink="0" align="center">
+            <Cell variant="narrow">{firstCellContent}</Cell>
+            {children.map(({ key, node }) => (
+                <Cell key={key} variant={variant}>
+                    {node}
+                </Cell>
+            ))}
+        </Flex>
+    )
+)

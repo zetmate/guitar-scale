@@ -9,7 +9,7 @@ import { getNoteNameMap } from '../../common/utils.ts'
 
 const getNotesText = (scale: SettingsContextValue['scale']) => {
     const nameMap = getNoteNameMap(scale.preferredNaming)
-    return scale.notes.map((note) => nameMap[note]).join(' ')
+    return scale.notes.map((note) => <span>{nameMap[note]}&nbsp;&nbsp;</span>)
 }
 
 export const ScaleForm = () => {
@@ -81,7 +81,10 @@ export const ScaleForm = () => {
                     getItemColor={(item) => item}
                 />
                 <Flex flexShrink="0" align="center">
-                    <Text>{getNotesText(scale)}</Text>
+                    <Text>
+                        {getNotesText(scale)}
+                        {}
+                    </Text>
                 </Flex>
             </Flex>
         </Flex>
