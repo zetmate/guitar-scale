@@ -1,10 +1,18 @@
-import { AlteredScale, Note, Scale, ScaleNotes } from './types.ts'
-import { ALL_ALTERED_SCALES, OCTAVE } from './constants.ts'
-import { alteredScaleData, scaleSchema } from './scales.ts'
+import {
+    AlteredScale,
+    Note,
+    noteName,
+    noteNameFlat,
+    noteNameSharp,
+    Scale,
+    ScaleNotes,
+} from './types.ts'
+import { ALL_ALTERED_SCALES, Interval } from './constants.ts'
+import { alteredScaleData, scaleSchema } from './scaleDefinitions.ts'
 
 export const getIntervalNoteFrom = (note: Note, semitones: number): Note => {
     // OCTAVE is added for supporting "negative" intervals
-    return (OCTAVE + note + semitones) % OCTAVE
+    return (Interval.Octave + note + semitones) % Interval.Octave
 }
 
 export const getScaleNotes = (root: Note, scale: Scale): ScaleNotes => {
@@ -44,4 +52,20 @@ export const capitalize = (str: string) => {
     const arr = str.split('')
     arr[0] = arr[0].toUpperCase()
     return arr.join('')
+}
+
+export const getNoteNameMap = (preferredNaming: 'flat' | 'sharp' | null) => {
+    return preferredNaming === 'flat'
+        ? noteNameFlat
+        : preferredNaming === 'sharp'
+          ? noteNameSharp
+          : noteName
+}
+
+export const getNoteName = (
+    note: Note,
+    preferredNaming: 'flat' | 'sharp' | null
+) => {
+    const nameMap = getNoteNameMap(preferredNaming)
+    return nameMap[note]
 }

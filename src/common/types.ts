@@ -28,6 +28,36 @@ export const noteName: Record<Note, string> = {
     [Note['G#/Ab']]: 'G#/Ab',
 }
 
+export const noteNameFlat: Record<Note, string> = {
+    [Note.A]: 'A',
+    [Note['A#/Bb']]: 'Bb',
+    [Note.B]: 'B',
+    [Note.C]: 'C',
+    [Note['C#/Db']]: 'Db',
+    [Note.D]: 'D',
+    [Note['D#/Eb']]: 'Eb',
+    [Note.E]: 'E',
+    [Note.F]: 'F',
+    [Note['F#/Gb']]: 'Gb',
+    [Note.G]: 'G',
+    [Note['G#/Ab']]: 'sAb',
+}
+
+export const noteNameSharp: Record<Note, string> = {
+    [Note.A]: 'A',
+    [Note['A#/Bb']]: 'A#',
+    [Note.B]: 'B',
+    [Note.C]: 'C',
+    [Note['C#/Db']]: 'C#',
+    [Note.D]: 'D',
+    [Note['D#/Eb']]: 'D#',
+    [Note.E]: 'E',
+    [Note.F]: 'F',
+    [Note['F#/Gb']]: 'F#',
+    [Note.G]: 'G',
+    [Note['G#/Ab']]: 'G#',
+}
+
 export type ScaleSchema = [
     number,
     number,
@@ -64,7 +94,14 @@ export enum Degree {
     VII,
 }
 
-export interface IAlteredScale {
+export interface BaseScaleInfo {
+    sign: 'flat' | 'sharp'
+    numberOfSigns: number
+    baseNote: Note
+    scale: Scale
+}
+
+export interface AlteredScaleInfo {
     name: AlteredScale
     base: Scale
     alterations: Map<Degree, 'flat' | 'sharp'>

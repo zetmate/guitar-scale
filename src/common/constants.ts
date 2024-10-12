@@ -11,8 +11,22 @@ export const DEFAULT_STRING_NOTES = [
     Note.E,
 ] as const
 
-export const OCTAVE = 12
-export const NUMBER_OF_FRETS = 15
+export enum Interval {
+    Unison,
+    MinSecond,
+    MajSecond,
+    MinThird,
+    MajThird,
+    Fourth,
+    DimFifth,
+    Fifth,
+    MinSixth,
+    MajSixth,
+    MinSeventh,
+    MajSeventh,
+    Octave,
+}
+
 export const ALL_NOTES = [
     Note.A,
     Note['A#/Bb'],
@@ -54,5 +68,6 @@ export const ALL_COLORS: readonly Color[] = [
 
 export const MAX_STRINGS = DEFAULT_STRING_NOTES.length
 export const MIN_STRINGS = 4
+export const NUMBER_OF_FRETS = 15
 
 export const ICON_SIZE = 32

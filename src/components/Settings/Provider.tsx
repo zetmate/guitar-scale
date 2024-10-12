@@ -6,6 +6,8 @@ import {
     isScaleAltered,
 } from '../../common/utils.ts'
 import { useLocalStorage } from '../LocalStorage/context.tsx'
+import { getScaleInfo } from '../../common/scaleSignsInfo.ts'
+import { alteredScaleData } from '../../common/scaleDefinitions.ts'
 
 export interface Settings {
     tuning: Note[]
@@ -21,10 +23,11 @@ export interface Settings {
 
 type SettingsUpdater = (prevSettings: Settings) => Settings
 
-interface SettingsContextValue extends Settings {
+export interface SettingsContextValue extends Settings {
     scale: Settings['scale'] & {
         notes: Note[]
         notesSet: Set<Note>
+        preferredNaming: 'flat' | 'sharp' | null
     }
     setSettings: (updater: SettingsUpdater) => void
 }
@@ -46,9 +49,13 @@ const contextValueFromSettings = (
     setSettings: SettingsContextValue['setSettings']
 ): SettingsContextValue => {
     const { type, root } = settings.scale
-    const notes = isScaleAltered(type)
+    const isAltered = isScaleAltered(type)
+    const notes = isAltered
         ? getAlteredScaleNotes(root, type)
         : getScaleNotes(settings.scale.root, type)
+
+    const baseScale = isAltered ? alteredScaleData[type].base : type
+    const baseScaleInfo = getScaleInfo(baseScale, root)
 
     return {
         ...settings,
@@ -56,6 +63,7 @@ const contextValueFromSettings = (
             ...settings.scale,
             notes,
             notesSet: new Set<Note>(notes),
+            preferredNaming: baseScaleInfo?.sign || null,
         },
         setSettings,
     }

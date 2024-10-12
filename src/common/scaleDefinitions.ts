@@ -1,6 +1,6 @@
 import {
     Degree,
-    IAlteredScale,
+    AlteredScaleInfo,
     AlteredScale,
     Scale,
     ScaleSchema,
@@ -11,7 +11,7 @@ export const scaleSchema: Record<Scale, ScaleSchema> = {
     [Scale.NaturalMinor]: [2, 1, 2, 2, 1, 2, 2],
 }
 
-export const alteredScaleData: Record<AlteredScale, IAlteredScale> = {
+export const alteredScaleData: Record<AlteredScale, AlteredScaleInfo> = {
     [AlteredScale.HarmonicMinor]: {
         name: AlteredScale.HarmonicMinor,
         base: Scale.NaturalMinor,

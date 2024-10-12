@@ -4,6 +4,13 @@ import { NoteSelector } from './selectors/NoteSelector.tsx'
 import { Selector } from './selectors/Selector.tsx'
 import { ALL_COLORS, ALL_SCALES } from '../../common/constants.ts'
 import { Box, Flex, Switch, Text } from '@radix-ui/themes'
+import { SettingsContextValue } from './Provider.tsx'
+import { getNoteNameMap } from '../../common/utils.ts'
+
+const getNotesText = (scale: SettingsContextValue['scale']) => {
+    const nameMap = getNoteNameMap(scale.preferredNaming)
+    return scale.notes.map((note) => nameMap[note]).join(' ')
+}
 
 export const ScaleForm = () => {
     const { scale, color, showAllNotes, setSettings } = useSettings()
@@ -53,6 +60,16 @@ export const ScaleForm = () => {
                     }
                     items={ALL_SCALES}
                 />
+                <Flex flexShrink="0" align="center">
+                    <Box flexShrink="0" pr="2">
+                        <Text size="2">Show all notes</Text>
+                    </Box>
+                    <Switch
+                        variant="soft"
+                        checked={showAllNotes}
+                        onCheckedChange={onSwitch}
+                    />
+                </Flex>
             </Flex>
             <Flex direction="row" gap="3">
                 <Selector<Color>
@@ -64,14 +81,7 @@ export const ScaleForm = () => {
                     getItemColor={(item) => item}
                 />
                 <Flex flexShrink="0" align="center">
-                    <Box flexShrink="0" pr="2">
-                        <Text size="2">Show all notes</Text>
-                    </Box>
-                    <Switch
-                        variant="soft"
-                        checked={showAllNotes}
-                        onCheckedChange={onSwitch}
-                    />
+                    <Text>{getNotesText(scale)}</Text>
                 </Flex>
             </Flex>
         </Flex>
