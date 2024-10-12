@@ -1,4 +1,10 @@
-import { AlteredScale, Color, Note, Scale } from '../../common/types.ts'
+import {
+    AlteredScale,
+    Color,
+    Note,
+    Scale,
+    ThemeMode,
+} from '../../common/types.ts'
 import React, { PropsWithChildren, useMemo, useState } from 'react'
 import {
     getAlteredScaleNotes,
@@ -9,7 +15,11 @@ import { useLocalStorage } from '../LocalStorage/context.tsx'
 import { getScaleInfo } from '../../common/scaleSignsInfo.ts'
 import { alteredScaleData } from '../../common/scaleDefinitions.ts'
 
+const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+const defaultTheme: ThemeMode = preferDark ? 'dark' : 'light'
+
 export interface Settings {
+    theme: ThemeMode
     tuning: Note[]
     color: {
         default: Color
@@ -27,12 +37,13 @@ export interface SettingsContextValue extends Settings {
     scale: Settings['scale'] & {
         notes: Note[]
         notesSet: Set<Note>
-        preferredNaming: 'flat' | 'sharp' | null
+        preferredNaming: 'flat' | 'sharp'
     }
     setSettings: (updater: SettingsUpdater) => void
 }
 
 const defaultSettings: Settings = {
+    theme: defaultTheme,
     tuning: [Note.E, Note.B, Note.G, Note.D, Note.A, Note.E],
     showAllNotes: false,
     color: {
@@ -63,7 +74,7 @@ const contextValueFromSettings = (
             ...settings.scale,
             notes,
             notesSet: new Set<Note>(notes),
-            preferredNaming: baseScaleInfo?.sign || null,
+            preferredNaming: baseScaleInfo?.sign || 'sharp',
         },
         setSettings,
     }

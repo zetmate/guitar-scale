@@ -4,11 +4,14 @@ import './reset.css'
 import '@radix-ui/themes/styles.css'
 import { App } from './App.tsx'
 import { LocalStorageProvider } from './components/LocalStorage/context.tsx'
+import { SettingsProvider } from './components/Settings/Provider.tsx'
 
 const Root = () => (
     <React.StrictMode>
         <LocalStorageProvider>
-            <App />
+            <SettingsProvider>
+                <App />
+            </SettingsProvider>
         </LocalStorageProvider>
     </React.StrictMode>
 )
