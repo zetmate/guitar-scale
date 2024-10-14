@@ -55,6 +55,13 @@ export const getScaleInfo = (scale: Scale, baseNote: Note) => {
             SHARP_MINOR_SCALES.find(searchCallback) ||
             null
         )
+    } else if (scale === Scale.Octatonic) {
+        return {
+            sign: 'flat',
+            numberOfSigns: 0,
+            baseNote,
+            scale,
+        }
     }
     return null
 }

@@ -80,9 +80,6 @@ export const getPreferredNaming = (
     if (!baseScaleInfo) {
         return defaultSign
     }
-    if (baseScaleInfo.scale === Scale.Octatonic) {
-        return 'flat'
-    }
     if (baseScaleInfo.sign) {
         return baseScaleInfo.sign
     }
