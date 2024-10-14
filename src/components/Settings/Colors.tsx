@@ -82,7 +82,7 @@ export const ColorsForm = React.memo(() => {
                 )}
             </div>
             {(scale.degreesInfo.hasSubdominant ||
-                scale.degreesInfo.hasSubdominant) && (
+                scale.degreesInfo.hasDominant) && (
                 <div className="group__row">
                     {scale.degreesInfo.hasDominant && (
                         <Selector<Color>
