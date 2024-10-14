@@ -1,0 +1,12 @@
+.group {
+    flex-shrink: 0;
+    padding: var(--space-4);
+}
+
+.scale__notes_list__sharp {
+    color: var(--grass-9);
+}
+
+.scale__notes_list__flat {
+    color: var(--tomato-9);
+}

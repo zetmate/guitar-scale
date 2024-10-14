@@ -1,15 +1,41 @@
-import { AlteredScale, Color, Note, Scale } from '../../common/types.ts'
+import {
+    AlteredScale,
+    AlteredScaleInfo,
+    Color,
+    Note,
+    Scale,
+} from '../../common/types.ts'
 import { useSettings } from './useSettings.ts'
 import { NoteSelector } from './selectors/NoteSelector.tsx'
 import { Selector } from './selectors/Selector.tsx'
 import { ALL_COLORS, ALL_SCALES } from '../../common/constants.ts'
-import { Box, Flex, Switch, Text } from '@radix-ui/themes'
+import { Box, Flex, Switch, Text, Tooltip } from '@radix-ui/themes'
 import { SettingsContextValue } from './Provider.tsx'
-import { getNoteNameMap } from '../../common/utils.ts'
+import { getNoteName, getNoteNameMap } from '../../common/utils.ts'
+import './settings.css'
 
 const getNotesText = (scale: SettingsContextValue['scale']) => {
     const nameMap = getNoteNameMap(scale.preferredNaming)
-    return scale.notes.map((note) => <span>{nameMap[note]}&nbsp;&nbsp;</span>)
+    const alterations =
+        scale.alteredScaleInfo?.alterations ||
+        (new Map() as AlteredScaleInfo['alterations'])
+
+    return scale.notes.map((note, index) => {
+        const alt = alterations.get(index)
+        const className = alt && `scale__notes_list__${alt}`
+        return (
+            <span key={note} className={className}>
+                {nameMap[note]}&nbsp;&nbsp;
+            </span>
+        )
+    })
+}
+
+const getHighlightExplanationText = (
+    baseScale: { note: Note; type: Scale },
+    preferredNaming: 'flat' | 'sharp'
+) => {
+    return `Your chosen scale is based on ${getNoteName(baseScale.note, preferredNaming)} ${baseScale.type}. Notes that a sharp to it are highlighted with green, flat - with red`
 }
 
 export const ScaleForm = () => {
@@ -81,10 +107,21 @@ export const ScaleForm = () => {
                     getItemColor={(item) => item}
                 />
                 <Flex flexShrink="0" align="center">
-                    <Text>
-                        {getNotesText(scale)}
-                        {}
-                    </Text>
+                    <Tooltip
+                        content={
+                            scale.alteredScaleInfo
+                                ? getHighlightExplanationText(
+                                      {
+                                          note: scale.root,
+                                          type: scale.alteredScaleInfo.base,
+                                      },
+                                      scale.preferredNaming
+                                  )
+                                : undefined
+                        }
+                    >
+                        <Text>{getNotesText(scale)}</Text>
+                    </Tooltip>
                 </Flex>
             </Flex>
         </Flex>

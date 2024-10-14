@@ -1,5 +1,6 @@
 import {
     AlteredScale,
+    AlteredScaleInfo,
     Color,
     Note,
     Scale,
@@ -38,6 +39,7 @@ export interface SettingsContextValue extends Settings {
         notes: Note[]
         notesSet: Set<Note>
         preferredNaming: 'flat' | 'sharp'
+        alteredScaleInfo?: AlteredScaleInfo
     }
     setSettings: (updater: SettingsUpdater) => void
 }
@@ -75,6 +77,7 @@ const contextValueFromSettings = (
             notes,
             notesSet: new Set<Note>(notes),
             preferredNaming: baseScaleInfo?.sign || 'sharp',
+            alteredScaleInfo: isAltered ? alteredScaleData[type] : undefined,
         },
         setSettings,
     }

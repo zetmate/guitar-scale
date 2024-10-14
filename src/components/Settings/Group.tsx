@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react'
 import { Box, Heading } from '@radix-ui/themes'
 import { useSettings } from './useSettings.ts'
-import './group.css'
+import './settings.css'
 
 interface GroupProps extends PropsWithChildren {
     title: string
