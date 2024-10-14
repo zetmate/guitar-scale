@@ -1,6 +1,7 @@
 .group {
     flex-shrink: 0;
     padding: var(--space-4);
+    height: 100%;
 }
 
 .scale__notes_list__sharp {

@@ -1,9 +1,10 @@
 import {
-    AlteredScale,
     AlteredScaleInfo,
+    AnyScale,
     Color,
     Note,
     Scale,
+    ScaleDegreesInfo,
     ThemeMode,
 } from '../../common/types.ts'
 import React, { PropsWithChildren, useMemo, useState } from 'react'
@@ -11,6 +12,7 @@ import {
     getAlterationsSet,
     getAlteredScaleNotes,
     getPreferredNaming,
+    getScaleDegreeInfo,
     getScaleNotes,
     isScaleAltered,
 } from '../../common/utils.ts'
@@ -27,11 +29,14 @@ export interface Settings {
     color: {
         default: Color
         alterations: Color
+        tonic: Color
+        dominant: Color
+        subdominant: Color
     }
     showAllNotes: boolean
     scale: {
         root: Note
-        type: Scale | AlteredScale
+        type: AnyScale
     }
 }
 
@@ -41,6 +46,7 @@ export interface SettingsContextValue extends Settings {
     scale: Settings['scale'] & {
         notes: Note[]
         notesSet: Set<Note>
+        degreesInfo: ScaleDegreesInfo
         preferredNaming: 'flat' | 'sharp'
         alteredScaleInfo?: AlteredScaleInfo | null
         alterationsSet: Set<Note>
@@ -55,6 +61,9 @@ const defaultSettings: Settings = {
     color: {
         default: 'blue',
         alterations: 'orange',
+        tonic: 'green',
+        dominant: 'blue',
+        subdominant: 'blue',
     },
     scale: {
         root: Note.A,
@@ -85,6 +94,11 @@ const contextValueFromSettings = (
             preferredNaming: getPreferredNaming(
                 baseScaleInfo,
                 alteredScaleInfo
+            ),
+            degreesInfo: getScaleDegreeInfo(
+                type,
+                notes,
+                alteredScaleInfo?.alterations
             ),
             alteredScaleInfo,
             alterationsSet: alteredScaleInfo

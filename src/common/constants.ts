@@ -1,4 +1,4 @@
-import { AlteredScale, Color, Note, Scale } from './types.ts'
+import { AlteredScale, AnyScale, Color, Note, Scale } from './types.ts'
 
 export const DEFAULT_STRING_NOTES = [
     Note.E,
@@ -42,6 +42,11 @@ export const ALL_NOTES = [
     Note['G#/Ab'],
 ] as const
 
+export const SCALES_WITHOUT_DEGREES: AnyScale[] = [
+    Scale.Wholetone,
+    Scale.Octatonic,
+]
+
 export const ALL_ALTERED_SCALES = new Set([
     AlteredScale.HarmonicMinor,
     AlteredScale.DoubleHarmonic,
@@ -56,6 +61,7 @@ export const ALL_SCALES = [
     Scale.Major,
     Scale.NaturalMinor,
     Scale.Octatonic,
+    Scale.Wholetone,
     ...ALL_ALTERED_SCALES,
 ]
 

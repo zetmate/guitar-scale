@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Badge, Text } from '@radix-ui/themes'
-import { Note } from '../../common/types.ts'
+import { Degree, Note } from '../../common/types.ts'
 import { useSettings } from '../Settings/useSettings.ts'
 import { getNoteName } from '../../common/utils.ts'
 
@@ -10,16 +10,45 @@ interface FretProps {
 
 export const Fret = React.memo(({ note }: FretProps) => {
     const {
-        scale: { notesSet, preferredNaming, alterationsSet },
+        scale: { notesSet, preferredNaming, alterationsSet, degreesInfo },
         color,
         showAllNotes,
     } = useSettings()
 
-    const noteColor = alterationsSet.has(note)
-        ? color.alterations
-        : notesSet.has(note)
-          ? color.default
-          : undefined
+    const noteColor = useMemo(() => {
+        if (alterationsSet.has(note)) {
+            return color.alterations
+        }
+        const { noteDegreeMap, hasSubdominant, hasTonic, hasDominant } =
+            degreesInfo
+
+        const degree = noteDegreeMap.get(note)
+        if (degree === undefined) {
+            return undefined
+        }
+        switch (degree) {
+            case Degree.I:
+                return hasTonic ? color.tonic : undefined
+            case Degree.IV:
+                return hasSubdominant ? color.subdominant : undefined
+            case Degree.V:
+                return hasDominant ? color.dominant : undefined
+        }
+
+        if (notesSet.has(note)) {
+            return color.default
+        }
+    }, [
+        alterationsSet,
+        color.alterations,
+        color.default,
+        color.dominant,
+        color.subdominant,
+        color.tonic,
+        degreesInfo,
+        note,
+        notesSet,
+    ])
 
     const noteName = getNoteName(note, preferredNaming)
     return (

@@ -10,6 +10,7 @@ export const scaleSchema: Record<Scale, ScaleSchema> = {
     [Scale.Major]: [2, 2, 1, 2, 2, 2, 1],
     [Scale.NaturalMinor]: [2, 1, 2, 2, 1, 2, 2],
     [Scale.Octatonic]: [2, 1, 2, 1, 2, 1, 2, 1],
+    [Scale.Wholetone]: [2, 2, 2, 2, 2, 2],
 }
 
 export const alteredScaleData: Record<AlteredScale, AlteredScaleInfo> = {

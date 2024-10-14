@@ -9,7 +9,7 @@ import {
 import { Color } from '../../../common/types.ts'
 import { capitalize } from '../../../common/utils.ts'
 
-interface SelectorProps<T> {
+export interface SelectorProps<T> {
     value?: T
     label?: string
     onSelect: (note: T) => void

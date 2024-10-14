@@ -3,6 +3,7 @@ import { Group } from './Group.tsx'
 import { Tuning } from './Tuning.tsx'
 import { Flex } from '@radix-ui/themes'
 import { ScaleForm } from './Scale.tsx'
+import { ColorsForm } from './Colors.tsx'
 
 export const Settings = React.memo(() => {
     return (
@@ -12,6 +13,9 @@ export const Settings = React.memo(() => {
             </Group>
             <Group title="Scale">
                 <ScaleForm />
+            </Group>
+            <Group title="Color">
+                <ColorsForm />
             </Group>
         </Flex>
     )

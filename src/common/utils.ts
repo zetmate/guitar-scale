@@ -1,15 +1,21 @@
 import {
     AlteredScale,
     AlteredScaleInfo,
+    AnyScale,
     BaseScaleInfo,
+    Degree,
     Note,
     noteName,
     noteNameFlat,
     noteNameSharp,
     Scale,
-    ScaleNotes,
+    ScaleDegreesInfo,
 } from './types.ts'
-import { ALL_ALTERED_SCALES, Interval } from './constants.ts'
+import {
+    ALL_ALTERED_SCALES,
+    Interval,
+    SCALES_WITHOUT_DEGREES,
+} from './constants.ts'
 import { alteredScaleData, scaleSchema } from './scaleDefinitions.ts'
 
 export const getIntervalNoteFrom = (note: Note, semitones: number): Note => {
@@ -17,7 +23,7 @@ export const getIntervalNoteFrom = (note: Note, semitones: number): Note => {
     return (Interval.Octave + note + semitones) % Interval.Octave
 }
 
-export const getScaleNotes = (root: Note, scale: Scale): ScaleNotes => {
+export const getScaleNotes = (root: Note, scale: Scale): Note[] => {
     const schema = scaleSchema[scale]
 
     let nextNote = root
@@ -28,7 +34,7 @@ export const getScaleNotes = (root: Note, scale: Scale): ScaleNotes => {
         nextNote = getIntervalNoteFrom(nextNote, interval)
     }
 
-    return result as ScaleNotes
+    return result
 }
 
 export const getAlteredScaleNotes = (root: Note, scale: AlteredScale) => {
@@ -44,9 +50,7 @@ export const getAlteredScaleNotes = (root: Note, scale: AlteredScale) => {
     })
 }
 
-export const isScaleAltered = (
-    scale: AlteredScale | Scale
-): scale is AlteredScale => {
+export const isScaleAltered = (scale: AnyScale): scale is AlteredScale => {
     return ALL_ALTERED_SCALES.has(scale as AlteredScale)
 }
 
@@ -96,4 +100,34 @@ export const getAlterationsSet = (
     return new Set(
         [...alteredScaleInfo.alterations.keys()].map((degree) => notes[degree])
     )
+}
+
+const getNoteDegreeMap = (scaleNotes: Note[]) => {
+    const noteDegreeMap = new Map<Note, Degree>()
+    scaleNotes.forEach((note, index) => {
+        noteDegreeMap.set(note, index)
+    })
+    return noteDegreeMap
+}
+
+export const getScaleDegreeInfo = (
+    scale: AnyScale,
+    scaleNotes: Note[],
+    alterations?: AlteredScaleInfo['alterations']
+): ScaleDegreesInfo => {
+    const checkHasDegree = (degree: Degree) => {
+        if (SCALES_WITHOUT_DEGREES.includes(scale)) {
+            return false
+        }
+        if (!alterations) {
+            return true
+        }
+        return !alterations.has(degree)
+    }
+    return {
+        hasTonic: checkHasDegree(Degree.I),
+        hasDominant: checkHasDegree(Degree.V),
+        hasSubdominant: checkHasDegree(Degree.IV),
+        noteDegreeMap: getNoteDegreeMap(scaleNotes),
+    }
 }

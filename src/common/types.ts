@@ -58,16 +58,13 @@ export const noteNameSharp: Record<Note, string> = {
     [Note['G#/Ab']]: 'G♯',
 }
 
-export type ScaleSchema =
-    | [number, number, number, number, number, number, number]
-    | [number, number, number, number, number, number, number, number]
-
-export type ScaleNotes = [Note, Note, Note, Note, Note, Note, Note]
+export type ScaleSchema = number[]
 
 export enum Scale {
     Major = 'Major',
     NaturalMinor = 'Minor',
     Octatonic = 'Octatonic',
+    Wholetone = 'Wholetone',
 }
 
 export enum AlteredScale {
@@ -80,9 +77,7 @@ export enum AlteredScale {
     Mixolydian = 'mixolydian mode',
 }
 
-export enum AsymmetricScale {
-    Wholetone = 'Wholetone',
-}
+export type AnyScale = Scale | AlteredScale
 
 export enum Degree {
     I,
@@ -105,6 +100,13 @@ export interface AlteredScaleInfo {
     name: AlteredScale
     base: Scale
     alterations: Map<Degree, 'flat' | 'sharp'>
+}
+
+export interface ScaleDegreesInfo {
+    hasTonic: boolean
+    hasDominant: boolean
+    hasSubdominant: boolean
+    noteDegreeMap: Map<Note, Degree>
 }
 
 export type Color = 'green' | 'blue' | 'orange' | 'yellow' | 'pink' | 'violet'
