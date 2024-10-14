@@ -5,16 +5,17 @@ import {
     BaseScaleInfo,
     Degree,
     Note,
-    noteName,
-    noteNameFlat,
-    noteNameSharp,
     Scale,
     ScaleDegreesInfo,
 } from './types.ts'
 import {
     ALL_ALTERED_SCALES,
+    FLAT,
     Interval,
+    noteNameFlat,
+    noteNameSharp,
     SCALES_WITHOUT_DEGREES,
+    SHARP,
 } from './constants.ts'
 import { alteredScaleData, scaleSchema } from './scaleDefinitions.ts'
 
@@ -60,29 +61,71 @@ export const capitalize = (str: string) => {
     return arr.join('')
 }
 
-export const getNoteNameMap = (preferredNaming: 'flat' | 'sharp' | null) => {
-    return preferredNaming === 'flat'
-        ? noteNameFlat
-        : preferredNaming === 'sharp'
-          ? noteNameSharp
-          : noteName
+export const getNoteNameMap = ({
+    preferredNaming,
+    baseNotes,
+    alterations,
+    notes,
+}: {
+    preferredNaming: 'flat' | 'sharp' | null
+    baseNotes: Note[]
+    notes: Note[]
+    alterations: AlteredScaleInfo['alterations'] | null
+}): Record<Note, string> => {
+    const baseNamesObj =
+        preferredNaming === 'flat'
+            ? noteNameFlat
+            : preferredNaming === 'sharp'
+              ? noteNameSharp
+              : null
+
+    const alteredNames: Record<Note, string> = { ...baseNamesObj }
+
+    // Check alterations and add double-flat / sharp
+    if (baseNamesObj) {
+        alterations?.forEach((alt, degree) => {
+            const baseNote = baseNotes[degree]
+            const note = notes[degree]
+            const baseName = baseNamesObj[baseNote]
+
+            if (alt === 'flat') {
+                if (baseName.endsWith(SHARP)) {
+                    // TODO: add bekar
+                    alteredNames[note] = baseName[0]
+                } else {
+                    alteredNames[note] = baseName + FLAT
+                }
+            } else if (alt === 'sharp') {
+                if (baseName.endsWith(FLAT)) {
+                    // TODO: add bekar
+                    alteredNames[note] = baseName[0]
+                } else {
+                    alteredNames[note] = baseName + SHARP
+                }
+            }
+        })
+        return alteredNames
+    } else {
+        // octo and whole-tone scale
+        notes.forEach((note, index) => {
+            if (index === 0) {
+                return // continue
+            }
+            const prevNoteName =
+        })
+    }
 }
 
 export const getPreferredNaming = (
-    baseScaleInfo: BaseScaleInfo | null,
-    alteredScaleInfo: AlteredScaleInfo | null
-): 'flat' | 'sharp' => {
-    const defaultSign = 'sharp'
+    baseScaleInfo: BaseScaleInfo | null
+): 'flat' | 'sharp' | null => {
     if (!baseScaleInfo) {
-        return defaultSign
+        return 'sharp'
     }
     if (baseScaleInfo.sign) {
         return baseScaleInfo.sign
     }
-    if (alteredScaleInfo && alteredScaleInfo.alterations.size > 0) {
-        return [...alteredScaleInfo.alterations.values()][0]
-    }
-    return defaultSign
+    return null
 }
 
 export const getAlterationsSet = (

@@ -86,6 +86,9 @@ const contextValueFromSettings = (
     const baseScale = isAltered ? alteredScaleData[type].base : type
     const baseScaleInfo = getScaleInfo(baseScale, root)
     const alteredScaleInfo = isAltered ? alteredScaleData[type] : null
+    const baseNotes = isAltered
+        ? getScaleNotes(settings.scale.root, baseScale)
+        : notes
 
     return {
         ...settings,
@@ -94,10 +97,7 @@ const contextValueFromSettings = (
             ...settings.scale,
             notes,
             notesSet: new Set<Note>(notes),
-            preferredNaming: getPreferredNaming(
-                baseScaleInfo,
-                alteredScaleInfo
-            ),
+            baseNaming: getPreferredNaming(baseScaleInfo),
             degreesInfo: getScaleDegreeInfo(
                 type,
                 notes,
