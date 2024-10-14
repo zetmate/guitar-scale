@@ -57,8 +57,8 @@ export const ScaleForm = () => {
     }
 
     return (
-        <Flex direction="column" gap="3">
-            <Flex direction="row" gap="3">
+        <div className="group__column">
+            <div className="group__row">
                 <NoteSelector
                     onSelect={(note) => onSelectScale(note, scale.type)}
                     value={scale.root}
@@ -70,8 +70,8 @@ export const ScaleForm = () => {
                     }
                     items={ALL_SCALES}
                 />
-            </Flex>
-            <Flex direction="row" gap="3">
+            </div>
+            <div className="group__row">
                 <Flex flexShrink="0" align="center">
                     <Tooltip
                         content={
@@ -99,7 +99,7 @@ export const ScaleForm = () => {
                         onCheckedChange={onSwitch}
                     />
                 </Flex>
-            </Flex>
-        </Flex>
+            </div>
+        </div>
     )
 }

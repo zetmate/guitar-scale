@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react'
-import { Flex } from '@radix-ui/themes'
 import { Selector } from './selectors/Selector.tsx'
 import { Color } from '../../common/types.ts'
 import { ALL_COLORS } from '../../common/constants.ts'
@@ -63,42 +62,42 @@ export const ColorsForm = React.memo(() => {
     )
 
     return (
-        <Flex direction="column" gap="3">
-            <Flex direction="row" gap="3">
+        <div className="group__column">
+            <div className="group__row">
                 <Selector<Color>
                     {...getCommonProps('default')}
                     buttonText="Default color"
                 />
-                {isScaleAltered(scale.type) && (
-                    <Selector<Color>
-                        {...getCommonProps('alterations', ALL_COLORS[2])}
-                        buttonText="Alts color"
-                    />
-                )}
                 {scale.degreesInfo.hasTonic && (
                     <Selector<Color>
                         {...getCommonProps('tonic')}
-                        buttonText="Tonic color"
+                        buttonText="Tonic"
                     />
                 )}
-            </Flex>
+            </div>
             {(scale.degreesInfo.hasSubdominant ||
                 scale.degreesInfo.hasSubdominant) && (
-                <Flex direction="row" gap="3">
-                    {scale.degreesInfo.hasTonic && (
+                <div className="group__row">
+                    {isScaleAltered(scale.type) && (
+                        <Selector<Color>
+                            {...getCommonProps('alterations', ALL_COLORS[2])}
+                            buttonText="Alterations"
+                        />
+                    )}
+                    {scale.degreesInfo.hasDominant && (
                         <Selector<Color>
                             {...getCommonProps('dominant')}
-                            buttonText="Dominant color"
+                            buttonText="Dominant"
                         />
                     )}
                     {scale.degreesInfo.hasSubdominant && (
                         <Selector<Color>
                             {...getCommonProps('subdominant')}
-                            buttonText="Subominant color"
+                            buttonText="Subominant"
                         />
                     )}
-                </Flex>
+                </div>
             )}
-        </Flex>
+        </div>
     )
 })

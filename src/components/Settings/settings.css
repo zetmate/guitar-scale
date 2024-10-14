@@ -4,6 +4,18 @@
     height: 100%;
 }
 
+.group__column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-3);
+}
+
+.group__row {
+    display: flex;
+    gap: var(--space-3);
+}
+
 .scale__notes_list__sharp {
     color: var(--grass-10);
 }

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { useSettings } from './useSettings.ts'
-import { Button, Flex } from '@radix-ui/themes'
+import { Button } from '@radix-ui/themes'
 import {
     DEFAULT_STRING_NOTES,
     MAX_STRINGS,
@@ -36,16 +36,16 @@ export const Tuning = React.memo(() => {
     )
 
     return (
-        <Flex direction="column" gap="3">
-            <Flex gap="3" direction="row-reverse">
+        <div className="group__column">
+            <div className="group__row flex_row_reverse">
                 {tuning.map((note, index) => (
                     <StringNoteSelector
                         key={`${note}_${index}`}
                         stringIndex={index}
                     />
                 ))}
-            </Flex>
-            <Flex gap="3">
+            </div>
+            <div className="group__row">
                 <Button
                     variant="soft"
                     color="red"
@@ -62,7 +62,7 @@ export const Tuning = React.memo(() => {
                 >
                     Add
                 </Button>
-            </Flex>
-        </Flex>
+            </div>
+        </div>
     )
 })

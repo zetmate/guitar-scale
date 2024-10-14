@@ -5,3 +5,20 @@
 .card_dark {
     background: rgba(255, 255, 255, 0.03);
 }
+
+.flex_row_reverse {
+    flex-direction: row-reverse;
+}
+
+.flex_justify_center {
+    justify-content: center;
+}
+
+.flex_align_center {
+    align-content: center;
+}
+
+.flex_center {
+    justify-content: center;
+    align-items: center;
+}

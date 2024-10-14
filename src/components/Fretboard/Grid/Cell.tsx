@@ -2,7 +2,6 @@ import React, { PropsWithChildren } from 'react'
 import { Flex } from '@radix-ui/themes'
 import { useSettings } from '../../Settings/useSettings.ts'
 import './grid.css'
-import '../../../common/styles.css'
 
 interface CellProps extends PropsWithChildren {
     variant?: 'regular' | 'short' | 'narrow'
