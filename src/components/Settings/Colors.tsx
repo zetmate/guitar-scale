@@ -7,6 +7,27 @@ import { Settings } from './Provider.tsx'
 import { useSettings } from './useSettings.ts'
 import { isScaleAltered } from '../../common/utils.ts'
 
+const getUpdatedColors = (
+    prevSettings: Settings,
+    changedType: keyof Settings['color'],
+    newValue: Color
+): Partial<Settings['color']> => {
+    if (changedType !== 'default') {
+        return { [changedType]: newValue }
+    }
+    const colorsArray = Object.entries(prevSettings.color)
+    const matchingColors = colorsArray.filter(([, color]) => {
+        return color === prevSettings.color.default
+    })
+    return matchingColors.reduce<Partial<Settings['color']>>(
+        (result, [key]) => {
+            result[key as keyof Settings['color']] = newValue
+            return result
+        },
+        {}
+    )
+}
+
 export const ColorsForm = React.memo(() => {
     const { setSettings, color, scale } = useSettings()
 
@@ -17,7 +38,7 @@ export const ColorsForm = React.memo(() => {
                     ...prevSettings,
                     color: {
                         ...prevSettings.color,
-                        [type]: color,
+                        ...getUpdatedColors(prevSettings, type, color),
                     },
                 }
             })
