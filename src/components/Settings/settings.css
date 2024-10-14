@@ -4,9 +4,9 @@
 }
 
 .scale__notes_list__sharp {
-    color: var(--grass-9);
+    color: var(--grass-10);
 }
 
 .scale__notes_list__flat {
-    color: var(--tomato-9);
+    color: var(--tomato-10);
 }
