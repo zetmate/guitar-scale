@@ -45,9 +45,10 @@ type SettingsUpdater = (prevSettings: Settings) => Settings
 export interface SettingsContextValue extends Settings {
     scale: Settings['scale'] & {
         notes: Note[]
+        noteNameMap: Map<Note, string>
         notesSet: Set<Note>
         degreesInfo: ScaleDegreesInfo
-        preferredNaming: 'flat' | 'sharp'
+        baseNaming: 'flat' | 'sharp' | null
         alteredScaleInfo?: AlteredScaleInfo | null
         alterationsSet: Set<Note>
     }

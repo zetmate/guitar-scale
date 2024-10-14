@@ -68,14 +68,6 @@ export const getNoteNameMap = (preferredNaming: 'flat' | 'sharp' | null) => {
           : noteName
 }
 
-export const getNoteName = (
-    note: Note,
-    preferredNaming: 'flat' | 'sharp' | null
-) => {
-    const nameMap = getNoteNameMap(preferredNaming)
-    return nameMap[note]
-}
-
 export const getPreferredNaming = (
     baseScaleInfo: BaseScaleInfo | null,
     alteredScaleInfo: AlteredScaleInfo | null
