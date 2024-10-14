@@ -56,6 +56,16 @@ export const ScaleForm = () => {
         })
     }
 
+    const notesListTooltip = scale.alteredScaleInfo
+        ? getHighlightExplanationText(
+              {
+                  note: scale.root,
+                  type: scale.alteredScaleInfo.base,
+              },
+              scale.preferredNaming
+          )
+        : undefined
+
     return (
         <div className="group__column">
             <div className="group__row">
@@ -74,17 +84,8 @@ export const ScaleForm = () => {
             <div className="group__row">
                 <Flex flexShrink="0" align="center">
                     <Tooltip
-                        content={
-                            scale.alteredScaleInfo
-                                ? getHighlightExplanationText(
-                                      {
-                                          note: scale.root,
-                                          type: scale.alteredScaleInfo.base,
-                                      },
-                                      scale.preferredNaming
-                                  )
-                                : undefined
-                        }
+                        hidden={!notesListTooltip}
+                        content={notesListTooltip}
                     >
                         <Text>{getNotesText(scale)}</Text>
                     </Tooltip>
