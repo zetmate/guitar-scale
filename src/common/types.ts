@@ -109,6 +109,15 @@ export interface ScaleDegreesInfo {
     noteDegreeMap: Map<Note, Degree>
 }
 
-export type Color = 'green' | 'blue' | 'orange' | 'yellow' | 'pink' | 'violet'
+export type Color =
+    | 'green'
+    | 'blue'
+    | 'orange'
+    | 'yellow'
+    | 'pink'
+    | 'violet'
+    | 'red'
+    | 'gray'
+    | 'cyan'
 
 export type ThemeMode = 'light' | 'dark'

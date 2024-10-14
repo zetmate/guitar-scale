@@ -67,11 +67,14 @@ export const ALL_SCALES = [
 
 export const ALL_COLORS: readonly Color[] = [
     'green',
+    'cyan',
     'blue',
+    'violet',
+    'pink',
+    'red',
     'orange',
     'yellow',
-    'pink',
-    'violet',
+    'gray',
 ] as const
 
 export const MAX_STRINGS = DEFAULT_STRING_NOTES.length
