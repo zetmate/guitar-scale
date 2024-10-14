@@ -76,6 +76,6 @@ export const ALL_COLORS: readonly Color[] = [
 
 export const MAX_STRINGS = DEFAULT_STRING_NOTES.length
 export const MIN_STRINGS = 4
-export const NUMBER_OF_FRETS = 24
+export const NUMBER_OF_FRETS = 27
 
 export const ICON_SIZE = 32

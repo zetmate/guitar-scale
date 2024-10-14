@@ -7,8 +7,8 @@ interface Props {
     fretNumber: number
 }
 
-const dot = [3, 5, 7, 9, 15]
-const doubleDot = [12]
+const dot = [3, 5, 7, 9, 15, 17, 19, 21, 27]
+const doubleDot = [12, 24]
 
 const Dot = () => {
     return <div className="fretboard__dot" />
