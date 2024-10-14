@@ -9,6 +9,7 @@ import {
 export const scaleSchema: Record<Scale, ScaleSchema> = {
     [Scale.Major]: [2, 2, 1, 2, 2, 2, 1],
     [Scale.NaturalMinor]: [2, 1, 2, 2, 1, 2, 2],
+    [Scale.Octatonic]: [2, 1, 2, 1, 2, 1, 2, 1],
 }
 
 export const alteredScaleData: Record<AlteredScale, AlteredScaleInfo> = {
@@ -16,6 +17,14 @@ export const alteredScaleData: Record<AlteredScale, AlteredScaleInfo> = {
         name: AlteredScale.HarmonicMinor,
         base: Scale.NaturalMinor,
         alterations: new Map([[Degree.VII, 'sharp']]),
+    },
+    [AlteredScale.DoubleHarmonic]: {
+        name: AlteredScale.DoubleHarmonic,
+        base: Scale.Major,
+        alterations: new Map([
+            [Degree.II, 'flat'],
+            [Degree.VI, 'flat'],
+        ]),
     },
     [AlteredScale.Locrian]: {
         name: AlteredScale.Locrian,

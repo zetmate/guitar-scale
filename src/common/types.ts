@@ -58,30 +58,30 @@ export const noteNameSharp: Record<Note, string> = {
     [Note['G#/Ab']]: 'G♯',
 }
 
-export type ScaleSchema = [
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-]
+export type ScaleSchema =
+    | [number, number, number, number, number, number, number]
+    | [number, number, number, number, number, number, number, number]
 
 export type ScaleNotes = [Note, Note, Note, Note, Note, Note, Note]
 
 export enum Scale {
     Major = 'Major',
     NaturalMinor = 'Minor',
+    Octatonic = 'Octatonic',
 }
 
 export enum AlteredScale {
     HarmonicMinor = 'harmonic minor',
+    DoubleHarmonic = 'double harmonic',
     Phrygian = 'phrygian',
     Locrian = 'locrian',
     Lydian = 'lydian',
     Dorian = 'dorian',
     Mixolydian = 'mixolydian mode',
+}
+
+export enum AsymmetricScale {
+    Wholetone = 'Wholetone',
 }
 
 export enum Degree {

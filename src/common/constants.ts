@@ -44,6 +44,7 @@ export const ALL_NOTES = [
 
 export const ALL_ALTERED_SCALES = new Set([
     AlteredScale.HarmonicMinor,
+    AlteredScale.DoubleHarmonic,
     AlteredScale.Locrian,
     AlteredScale.Dorian,
     AlteredScale.Lydian,
@@ -54,6 +55,7 @@ export const ALL_ALTERED_SCALES = new Set([
 export const ALL_SCALES = [
     Scale.Major,
     Scale.NaturalMinor,
+    Scale.Octatonic,
     ...ALL_ALTERED_SCALES,
 ]
 
