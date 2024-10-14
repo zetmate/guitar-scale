@@ -57,7 +57,7 @@ export const getScaleInfo = (scale: Scale, baseNote: Note) => {
         )
     } else if (scale === Scale.Octatonic) {
         return {
-            sign: 'flat',
+            sign: 'flat' as const,
             numberOfSigns: 0,
             baseNote,
             scale,
