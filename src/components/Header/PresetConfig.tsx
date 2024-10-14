@@ -15,9 +15,12 @@ export const PresetConfig = React.memo(() => {
     } = useSettings()
 
     const onDownload = () => {
-        const blob = new Blob([JSON.stringify(preset)], {
-            type: `application/${PRESET_EXTENSION}`,
-        })
+        const blob = new Blob(
+            [JSON.stringify({ ...preset, theme: undefined })],
+            {
+                type: `application/${PRESET_EXTENSION}`,
+            }
+        )
         const url = URL.createObjectURL(blob)
 
         const downloadLink = document.createElement('a')
@@ -55,7 +58,10 @@ export const PresetConfig = React.memo(() => {
                             return
                         }
                         const parsedPreset = JSON.parse(result)
-                        setSettings(() => parsedPreset)
+                        setSettings((prev) => ({
+                            ...parsedPreset,
+                            theme: prev.theme,
+                        }))
                     } catch (e) {
                         onError(e)
                     }
