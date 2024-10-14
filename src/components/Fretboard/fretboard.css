@@ -3,7 +3,8 @@
 }
 
 .fretboard__string_cell {
-    width: 100%;
+    width: 50%;
+    padding-left: 4px;
     display: flex;
     justify-content: center;
     align-items: center;

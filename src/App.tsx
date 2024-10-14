@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react'
-import { Flex, Section, Theme } from '@radix-ui/themes'
+import { Flex, Theme } from '@radix-ui/themes'
 import { Fretboard } from './components/Fretboard/Fretboard.tsx'
 import { Settings } from './components/Settings'
 import { Header } from './components/Header'
 import { MobileWarningPopup } from './components/MobileWarningPopup.tsx'
 import { useSettings } from './components/Settings/useSettings.ts'
+import './app.css'
 
 export const App = React.memo(() => {
     const { theme, setSettings } = useSettings()
@@ -17,14 +18,14 @@ export const App = React.memo(() => {
 
     return (
         <Theme accentColor="green" appearance={theme}>
-            <Section px="8">
+            <div className="app">
                 <Flex gapY="7" direction="column">
                     <Header setTheme={onThemeChange} currentTheme={theme} />
                     <MobileWarningPopup />
                     <Settings />
                     <Fretboard />
                 </Flex>
-            </Section>
+            </div>
         </Theme>
     )
 })
