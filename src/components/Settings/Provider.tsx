@@ -51,6 +51,7 @@ export interface SettingsContextValue extends Settings {
         alteredScaleInfo?: AlteredScaleInfo | null
         alterationsSet: Set<Note>
     }
+    preset: Settings
     setSettings: (updater: SettingsUpdater) => void
 }
 
@@ -87,6 +88,7 @@ const contextValueFromSettings = (
 
     return {
         ...settings,
+        preset: settings,
         scale: {
             ...settings.scale,
             notes,
