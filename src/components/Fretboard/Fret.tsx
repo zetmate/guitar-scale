@@ -28,11 +28,20 @@ export const Fret = React.memo(({ note }: FretProps) => {
         }
         switch (degree) {
             case Degree.I:
-                return hasTonic ? color.tonic : undefined
+                if (hasTonic) {
+                    return color.tonic
+                }
+                break
             case Degree.IV:
-                return hasSubdominant ? color.subdominant : undefined
+                if (hasSubdominant) {
+                    return color.subdominant
+                }
+                break
             case Degree.V:
-                return hasDominant ? color.dominant : undefined
+                if (hasDominant) {
+                    return color.dominant
+                }
+                break
         }
 
         if (notesSet.has(note)) {
