@@ -11,7 +11,7 @@ export const Settings = React.memo(() => {
             <Group title="Tuning">
                 <Tuning />
             </Group>
-            <Group title="Scale">
+            <Group title="Scale & Key">
                 <ScaleForm />
             </Group>
             <Group title="Color">

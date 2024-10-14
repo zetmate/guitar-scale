@@ -66,24 +66,24 @@ export const ColorsForm = React.memo(() => {
             <div className="group__row">
                 <Selector<Color>
                     {...getCommonProps('default')}
-                    buttonText="Default color"
+                    buttonText="Default"
                 />
                 {scale.degreesInfo.hasTonic && (
                     <Selector<Color>
-                        {...getCommonProps('tonic')}
+                        {...getCommonProps('tonic', 'green')}
                         buttonText="Tonic"
+                    />
+                )}
+                {isScaleAltered(scale.type) && (
+                    <Selector<Color>
+                        {...getCommonProps('alterations', 'orange')}
+                        buttonText="Alterations"
                     />
                 )}
             </div>
             {(scale.degreesInfo.hasSubdominant ||
                 scale.degreesInfo.hasSubdominant) && (
                 <div className="group__row">
-                    {isScaleAltered(scale.type) && (
-                        <Selector<Color>
-                            {...getCommonProps('alterations', ALL_COLORS[2])}
-                            buttonText="Alterations"
-                        />
-                    )}
                     {scale.degreesInfo.hasDominant && (
                         <Selector<Color>
                             {...getCommonProps('dominant')}
@@ -93,7 +93,7 @@ export const ColorsForm = React.memo(() => {
                     {scale.degreesInfo.hasSubdominant && (
                         <Selector<Color>
                             {...getCommonProps('subdominant')}
-                            buttonText="Subominant"
+                            buttonText="Subdominant"
                         />
                     )}
                 </div>
