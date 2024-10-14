@@ -14,16 +14,12 @@ export const getScalesList = (
     const order = type === 'sharp' ? sharpsOrder : flatsOrder
     let currentNote = scale === Scale.Major ? Note.C : Note.A
 
-    const common = {
-        sign: type,
-        scale,
-    }
-
     const result: BaseScaleInfo[] = [
         {
             numberOfSigns: 0,
             baseNote: currentNote,
-            ...common,
+            sign: null,
+            scale,
         },
     ]
 
@@ -32,7 +28,8 @@ export const getScalesList = (
         result.push({
             numberOfSigns: index + 1,
             baseNote: currentNote,
-            ...common,
+            sign: type,
+            scale,
         })
     })
 

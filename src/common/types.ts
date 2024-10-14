@@ -95,7 +95,7 @@ export enum Degree {
 }
 
 export interface BaseScaleInfo {
-    sign: 'flat' | 'sharp'
+    sign: 'flat' | 'sharp' | null
     numberOfSigns: number
     baseNote: Note
     scale: Scale

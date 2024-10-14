@@ -1,5 +1,7 @@
 import {
     AlteredScale,
+    AlteredScaleInfo,
+    BaseScaleInfo,
     Note,
     noteName,
     noteNameFlat,
@@ -68,4 +70,21 @@ export const getNoteName = (
 ) => {
     const nameMap = getNoteNameMap(preferredNaming)
     return nameMap[note]
+}
+
+export const getPreferredNaming = (
+    baseScaleInfo: BaseScaleInfo | null,
+    alteredScaleInfo: AlteredScaleInfo | null
+): 'flat' | 'sharp' => {
+    const defaultSign = 'sharp'
+    if (!baseScaleInfo) {
+        return defaultSign
+    }
+    if (baseScaleInfo.sign) {
+        return baseScaleInfo.sign
+    }
+    if (alteredScaleInfo && alteredScaleInfo.alterations.size > 0) {
+        return [...alteredScaleInfo.alterations.values()][0]
+    }
+    return defaultSign
 }

@@ -9,6 +9,7 @@ import {
 import React, { PropsWithChildren, useMemo, useState } from 'react'
 import {
     getAlteredScaleNotes,
+    getPreferredNaming,
     getScaleNotes,
     isScaleAltered,
 } from '../../common/utils.ts'
@@ -39,7 +40,7 @@ export interface SettingsContextValue extends Settings {
         notes: Note[]
         notesSet: Set<Note>
         preferredNaming: 'flat' | 'sharp'
-        alteredScaleInfo?: AlteredScaleInfo
+        alteredScaleInfo?: AlteredScaleInfo | null
     }
     setSettings: (updater: SettingsUpdater) => void
 }
@@ -69,6 +70,7 @@ const contextValueFromSettings = (
 
     const baseScale = isAltered ? alteredScaleData[type].base : type
     const baseScaleInfo = getScaleInfo(baseScale, root)
+    const alteredScaleInfo = isAltered ? alteredScaleData[type] : null
 
     return {
         ...settings,
@@ -76,8 +78,11 @@ const contextValueFromSettings = (
             ...settings.scale,
             notes,
             notesSet: new Set<Note>(notes),
-            preferredNaming: baseScaleInfo?.sign || 'sharp',
-            alteredScaleInfo: isAltered ? alteredScaleData[type] : undefined,
+            preferredNaming: getPreferredNaming(
+                baseScaleInfo,
+                alteredScaleInfo
+            ),
+            alteredScaleInfo,
         },
         setSettings,
     }
