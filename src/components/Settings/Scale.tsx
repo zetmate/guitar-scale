@@ -77,6 +77,8 @@ export const ScaleForm = () => {
         })
     }
 
+    const defaultAltsColor = color.alterations || ALL_COLORS[2]
+
     return (
         <Flex direction="column" gap="3">
             <Flex direction="row" gap="3">
@@ -113,13 +115,13 @@ export const ScaleForm = () => {
                 />
                 {isScaleAltered(scale.type) && (
                     <Selector<Color>
-                        value={color.alterations || color.default}
+                        value={defaultAltsColor}
                         onSelect={(color) =>
                             onSelectColor(color, 'alterations')
                         }
                         items={ALL_COLORS}
                         buttonText="Alts color"
-                        color={color.alterations || ALL_COLORS[2]}
+                        color={defaultAltsColor}
                         getItemColor={(item) => item}
                     />
                 )}

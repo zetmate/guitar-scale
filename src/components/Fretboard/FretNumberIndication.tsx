@@ -1,6 +1,7 @@
-import { Flex, Text, useThemeContext } from '@radix-ui/themes'
+import { Flex, Text } from '@radix-ui/themes'
 import { NUMBER_OF_FRETS } from '../../common/constants.ts'
 import { Row } from './Grid/Row.tsx'
+import './fretboard.css'
 
 interface Props {
     fretNumber: number
@@ -10,20 +11,7 @@ const dot = [3, 5, 7, 9, 15]
 const doubleDot = [12]
 
 const Dot = () => {
-    const theme = useThemeContext()
-    const mode = theme.appearance === 'inherit' ? 'dark' : theme.appearance
-
-    return (
-        <div
-            style={{
-                width: '1vh',
-                height: '1vh',
-                flexShrink: '0',
-                borderRadius: '100%',
-                background: mode === 'dark' ? '#bbb' : '#555',
-            }}
-        />
-    )
+    return <div className="fretboard__dot" />
 }
 
 const DoubleDot = () => (
@@ -40,7 +28,11 @@ const IndicationCell = ({ fretNumber }: Props) => {
     if (doubleDot.includes(fretNumber)) {
         return <DoubleDot />
     }
-    return <Text size="1">{fretNumber}</Text>
+    return (
+        <Text color="gray" size="1">
+            {fretNumber}
+        </Text>
+    )
 }
 
 const fretboard: number[] = []

@@ -9,3 +9,11 @@
     justify-content: center;
     align-items: center;
 }
+
+.fretboard__dot {
+    width: 1vh;
+    height: 1vh;
+    flex-shrink: 0;
+    border-radius: 100%;
+    background-color: var(--gray-12);
+}
