@@ -10,8 +10,12 @@ import { NoteSelector } from './selectors/NoteSelector.tsx'
 import { Selector } from './selectors/Selector.tsx'
 import { ALL_COLORS, ALL_SCALES } from '../../common/constants.ts'
 import { Box, Flex, Switch, Text, Tooltip } from '@radix-ui/themes'
-import { SettingsContextValue } from './Provider.tsx'
-import { getNoteName, getNoteNameMap } from '../../common/utils.ts'
+import { Settings, SettingsContextValue } from './Provider.tsx'
+import {
+    getNoteName,
+    getNoteNameMap,
+    isScaleAltered,
+} from '../../common/utils.ts'
 import './settings.css'
 
 const getNotesText = (scale: SettingsContextValue['scale']) => {
@@ -52,12 +56,13 @@ export const ScaleForm = () => {
             }
         })
     }
-    const onSelectColor = (color: Color) => {
+    const onSelectColor = (color: Color, type: keyof Settings['color']) => {
         setSettings((prevSettings) => {
             return {
                 ...prevSettings,
                 color: {
-                    default: color,
+                    ...prevSettings.color,
+                    [type]: color,
                 },
             }
         })
@@ -100,12 +105,24 @@ export const ScaleForm = () => {
             <Flex direction="row" gap="3">
                 <Selector<Color>
                     value={color.default}
-                    onSelect={onSelectColor}
+                    onSelect={(color) => onSelectColor(color, 'default')}
                     items={ALL_COLORS}
                     buttonText="Color"
                     color={color.default}
                     getItemColor={(item) => item}
                 />
+                {isScaleAltered(scale.type) && (
+                    <Selector<Color>
+                        value={color.alterations || color.default}
+                        onSelect={(color) =>
+                            onSelectColor(color, 'alterations')
+                        }
+                        items={ALL_COLORS}
+                        buttonText="Alts color"
+                        color={color.alterations || ALL_COLORS[2]}
+                        getItemColor={(item) => item}
+                    />
+                )}
                 <Flex flexShrink="0" align="center">
                     <Tooltip
                         content={

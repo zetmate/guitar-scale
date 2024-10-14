@@ -88,3 +88,12 @@ export const getPreferredNaming = (
     }
     return defaultSign
 }
+
+export const getAlterationsSet = (
+    alteredScaleInfo: AlteredScaleInfo,
+    notes: Note[]
+) => {
+    return new Set(
+        [...alteredScaleInfo.alterations.keys()].map((degree) => notes[degree])
+    )
+}

@@ -8,6 +8,7 @@ import {
 } from '../../common/types.ts'
 import React, { PropsWithChildren, useMemo, useState } from 'react'
 import {
+    getAlterationsSet,
     getAlteredScaleNotes,
     getPreferredNaming,
     getScaleNotes,
@@ -25,6 +26,7 @@ export interface Settings {
     tuning: Note[]
     color: {
         default: Color
+        alterations: Color
     }
     showAllNotes: boolean
     scale: {
@@ -41,6 +43,7 @@ export interface SettingsContextValue extends Settings {
         notesSet: Set<Note>
         preferredNaming: 'flat' | 'sharp'
         alteredScaleInfo?: AlteredScaleInfo | null
+        alterationsSet: Set<Note>
     }
     setSettings: (updater: SettingsUpdater) => void
 }
@@ -51,6 +54,7 @@ const defaultSettings: Settings = {
     showAllNotes: false,
     color: {
         default: 'blue',
+        alterations: 'orange',
     },
     scale: {
         root: Note.A,
@@ -83,6 +87,9 @@ const contextValueFromSettings = (
                 alteredScaleInfo
             ),
             alteredScaleInfo,
+            alterationsSet: alteredScaleInfo
+                ? getAlterationsSet(alteredScaleInfo, notes)
+                : new Set(),
         },
         setSettings,
     }

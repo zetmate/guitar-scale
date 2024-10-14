@@ -10,11 +10,17 @@ interface FretProps {
 
 export const Fret = React.memo(({ note }: FretProps) => {
     const {
-        scale: { notesSet, preferredNaming },
+        scale: { notesSet, preferredNaming, alterationsSet },
         color,
         showAllNotes,
     } = useSettings()
-    const noteColor = notesSet.has(note) ? color.default : undefined
+
+    const noteColor = alterationsSet.has(note)
+        ? color.alterations
+        : notesSet.has(note)
+          ? color.default
+          : undefined
+
     const noteName = getNoteName(note, preferredNaming)
     return (
         <div>
