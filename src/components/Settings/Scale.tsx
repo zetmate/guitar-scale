@@ -1,3 +1,4 @@
+import React from 'react'
 import { AlteredScaleInfo, AnyScale, Note, Scale } from '../../common/types.ts'
 import { useSettings } from './useSettings.ts'
 import { NoteSelector } from './selectors/NoteSelector.tsx'
@@ -5,11 +6,9 @@ import { Selector } from './selectors/Selector.tsx'
 import { ALL_SCALES } from '../../common/constants.ts'
 import { Box, Flex, Switch, Text, Tooltip } from '@radix-ui/themes'
 import { SettingsContextValue } from './Provider.tsx'
-import { getNoteName, getNoteNameMap } from '../../common/utils.ts'
 import './settings.css'
 
 const getNotesText = (scale: SettingsContextValue['scale']) => {
-    const nameMap = getNoteNameMap(scale.preferredNaming)
     const alterations =
         scale.alteredScaleInfo?.alterations ||
         (new Map() as AlteredScaleInfo['alterations'])
@@ -19,7 +18,7 @@ const getNotesText = (scale: SettingsContextValue['scale']) => {
         const className = alt && `scale__notes_list__${alt}`
         return (
             <span key={note} className={className}>
-                {nameMap[note]}&nbsp;&nbsp;
+                {scale.noteNameMap[note]}&nbsp;&nbsp;
             </span>
         )
     })
@@ -27,13 +26,13 @@ const getNotesText = (scale: SettingsContextValue['scale']) => {
 
 const getHighlightExplanationText = (
     baseScale: { note: Note; type: Scale },
-    preferredNaming: 'flat' | 'sharp'
+    nameMap: Record<Note, string>
 ) => {
-    return `Your chosen scale is based on ${getNoteName(baseScale.note, preferredNaming)} ${baseScale.type}. Notes that a sharp to it are highlighted with green, flat - with red`
+    return `Your chosen scale is based on ${nameMap[baseScale.note]} ${baseScale.type}. Notes that a sharp to it are highlighted with green, flat - with red`
 }
 
-export const ScaleForm = () => {
-    const { scale, showAllNotes, setSettings } = useSettings()
+export const ScaleForm = React.memo(() => {
+    const { scale, showAllNotes, academicNotation, setSettings } = useSettings()
 
     const onSelectScale = (root: Note, type: AnyScale) => {
         setSettings((prevSettings) => {
@@ -56,13 +55,22 @@ export const ScaleForm = () => {
         })
     }
 
+    const onAcademicNotationSwitch = (checked: boolean) => {
+        setSettings((prevSettings) => {
+            return {
+                ...prevSettings,
+                academicNotation: checked,
+            }
+        })
+    }
+
     const notesListTooltip = scale.alteredScaleInfo
         ? getHighlightExplanationText(
               {
                   note: scale.root,
                   type: scale.alteredScaleInfo.base,
               },
-              scale.preferredNaming
+              scale.noteNameMap
           )
         : undefined
 
@@ -80,16 +88,6 @@ export const ScaleForm = () => {
                     }
                     items={ALL_SCALES}
                 />
-            </div>
-            <div className="group__row">
-                <Flex flexShrink="0" align="center">
-                    <Tooltip
-                        hidden={!notesListTooltip}
-                        content={notesListTooltip}
-                    >
-                        <Text>{getNotesText(scale)}</Text>
-                    </Tooltip>
-                </Flex>
                 <Flex flexShrink="0" align="center">
                     <Box flexShrink="0" pr="2">
                         <Text size="2">Show all notes</Text>
@@ -101,6 +99,28 @@ export const ScaleForm = () => {
                     />
                 </Flex>
             </div>
+            <div className="group__row">
+                <Flex flexShrink="0" align="center">
+                    <Tooltip
+                        hidden={!notesListTooltip}
+                        content={notesListTooltip}
+                    >
+                        <Text>{getNotesText(scale)}</Text>
+                    </Tooltip>
+                </Flex>
+                {scale.containsAcademicNotation && (
+                    <Flex flexShrink="0" align="center">
+                        <Box flexShrink="0" pr="2">
+                            <Text size="2">Academic notation</Text>
+                        </Box>
+                        <Switch
+                            variant="soft"
+                            checked={academicNotation}
+                            onCheckedChange={onAcademicNotationSwitch}
+                        />
+                    </Flex>
+                )}
+            </div>
         </div>
     )
-}
+})

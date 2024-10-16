@@ -11,6 +11,7 @@ import React, { PropsWithChildren, useMemo, useState } from 'react'
 import {
     getAlterationsSet,
     getAlteredScaleNotes,
+    getNoteNameMap,
     getPreferredNaming,
     getScaleDegreeInfo,
     getScaleNotes,
@@ -33,6 +34,7 @@ export interface Settings {
         dominant: Color
         subdominant: Color
     }
+    academicNotation: boolean
     showAllNotes: boolean
     scale: {
         root: Note
@@ -45,11 +47,13 @@ type SettingsUpdater = (prevSettings: Settings) => Settings
 export interface SettingsContextValue extends Settings {
     scale: Settings['scale'] & {
         notes: Note[]
+        noteNameMap: Record<Note, string>
         notesSet: Set<Note>
         degreesInfo: ScaleDegreesInfo
-        preferredNaming: 'flat' | 'sharp'
+        baseNaming: 'flat' | 'sharp' | null
         alteredScaleInfo?: AlteredScaleInfo | null
         alterationsSet: Set<Note>
+        containsAcademicNotation: boolean
     }
     preset: Settings
     setSettings: (updater: SettingsUpdater) => void
@@ -59,6 +63,7 @@ const defaultSettings: Settings = {
     theme: defaultTheme,
     tuning: [Note.E, Note.B, Note.G, Note.D, Note.A, Note.E],
     showAllNotes: false,
+    academicNotation: false,
     color: {
         default: 'blue',
         alterations: 'orange',
@@ -82,9 +87,23 @@ const contextValueFromSettings = (
         ? getAlteredScaleNotes(root, type)
         : getScaleNotes(settings.scale.root, type)
 
+    const notesSet = new Set<Note>(notes)
+
     const baseScale = isAltered ? alteredScaleData[type].base : type
     const baseScaleInfo = getScaleInfo(baseScale, root)
     const alteredScaleInfo = isAltered ? alteredScaleData[type] : null
+    const baseNotes = isAltered
+        ? getScaleNotes(settings.scale.root, baseScale)
+        : notes
+
+    const { noteNameMap, containsAcademicNotation } = getNoteNameMap({
+        scaleType: type,
+        notes,
+        baseNotes,
+        preferredNaming: getPreferredNaming(baseScaleInfo),
+        alterations: alteredScaleInfo?.alterations || null,
+        academicNotation: settings.academicNotation,
+    })
 
     return {
         ...settings,
@@ -92,16 +111,15 @@ const contextValueFromSettings = (
         scale: {
             ...settings.scale,
             notes,
-            notesSet: new Set<Note>(notes),
-            preferredNaming: getPreferredNaming(
-                baseScaleInfo,
-                alteredScaleInfo
-            ),
+            notesSet,
+            baseNaming: getPreferredNaming(baseScaleInfo),
             degreesInfo: getScaleDegreeInfo(
                 type,
                 notes,
                 alteredScaleInfo?.alterations
             ),
+            noteNameMap,
+            containsAcademicNotation,
             alteredScaleInfo,
             alterationsSet: alteredScaleInfo
                 ? getAlterationsSet(alteredScaleInfo, notes)

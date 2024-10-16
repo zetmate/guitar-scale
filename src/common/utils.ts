@@ -5,16 +5,21 @@ import {
     BaseScaleInfo,
     Degree,
     Note,
-    noteName,
-    noteNameFlat,
-    noteNameSharp,
     Scale,
     ScaleDegreesInfo,
 } from './types.ts'
 import {
     ALL_ALTERED_SCALES,
+    DOUBLE_FLAT,
+    DOUBLE_SHARP,
+    FLAT,
     Interval,
-    SCALES_WITHOUT_DEGREES,
+    NATURAL,
+    noteNameFlat,
+    noteNameSharp,
+    NON_DIATONIC_SCALES,
+    SHARP,
+    ALL_DIATONIC_SCALES,
 } from './constants.ts'
 import { alteredScaleData, scaleSchema } from './scaleDefinitions.ts'
 
@@ -60,37 +65,83 @@ export const capitalize = (str: string) => {
     return arr.join('')
 }
 
-export const getNoteNameMap = (preferredNaming: 'flat' | 'sharp' | null) => {
-    return preferredNaming === 'flat'
-        ? noteNameFlat
-        : preferredNaming === 'sharp'
-          ? noteNameSharp
-          : noteName
-}
+export const getNoteNameMap = ({
+    scaleType,
+    preferredNaming,
+    baseNotes,
+    alterations,
+    notes,
+    academicNotation,
+}: {
+    scaleType: AnyScale
+    preferredNaming: 'flat' | 'sharp'
+    baseNotes: Note[]
+    notes: Note[]
+    alterations: AlteredScaleInfo['alterations'] | null
+    academicNotation: boolean
+}): {
+    noteNameMap: Record<Note, string>
+    containsAcademicNotation: boolean
+} => {
+    let containsAcademicNotation = false
+    const baseNamesObj =
+        preferredNaming === 'flat' ? noteNameFlat : noteNameSharp
 
-export const getNoteName = (
-    note: Note,
-    preferredNaming: 'flat' | 'sharp' | null
-) => {
-    const nameMap = getNoteNameMap(preferredNaming)
-    return nameMap[note]
+    const alteredNames: Record<Note, string> = { ...baseNamesObj }
+
+    // Check alterations and add double-flat / sharp
+    if (ALL_DIATONIC_SCALES.includes(scaleType)) {
+        alterations?.forEach((alt, degree) => {
+            const baseNote = baseNotes[degree]
+            const note = notes[degree]
+            const baseName = baseNamesObj[baseNote]
+
+            if (alt === 'flat') {
+                if (baseName.endsWith(SHARP)) {
+                    containsAcademicNotation = true
+                    if (academicNotation) {
+                        alteredNames[note] = NATURAL + baseName[0]
+                    }
+                } else if (baseName.endsWith(FLAT)) {
+                    containsAcademicNotation = true
+                    if (academicNotation) {
+                        alteredNames[note] = baseName[0] + DOUBLE_FLAT
+                    }
+                } else {
+                    alteredNames[note] = baseName + FLAT
+                }
+            } else if (alt === 'sharp') {
+                if (baseName.endsWith(FLAT)) {
+                    containsAcademicNotation = true
+                    if (academicNotation) {
+                        alteredNames[note] = NATURAL + baseName[0]
+                    }
+                } else if (baseName.endsWith(SHARP)) {
+                    containsAcademicNotation = true
+                    if (academicNotation) {
+                        alteredNames[note] = baseName[0] + DOUBLE_SHARP
+                    }
+                } else {
+                    alteredNames[note] = baseName + SHARP
+                }
+            }
+        })
+        return { noteNameMap: alteredNames, containsAcademicNotation }
+    }
+
+    return { noteNameMap: alteredNames, containsAcademicNotation }
 }
 
 export const getPreferredNaming = (
-    baseScaleInfo: BaseScaleInfo | null,
-    alteredScaleInfo: AlteredScaleInfo | null
+    baseScaleInfo: BaseScaleInfo | null
 ): 'flat' | 'sharp' => {
-    const defaultSign = 'sharp'
     if (!baseScaleInfo) {
-        return defaultSign
+        return 'sharp'
     }
     if (baseScaleInfo.sign) {
         return baseScaleInfo.sign
     }
-    if (alteredScaleInfo && alteredScaleInfo.alterations.size > 0) {
-        return [...alteredScaleInfo.alterations.values()][0]
-    }
-    return defaultSign
+    return 'sharp'
 }
 
 export const getAlterationsSet = (
@@ -116,7 +167,7 @@ export const getScaleDegreeInfo = (
     alterations?: AlteredScaleInfo['alterations']
 ): ScaleDegreesInfo => {
     const checkHasDegree = (degree: Degree) => {
-        if (SCALES_WITHOUT_DEGREES.includes(scale)) {
+        if (NON_DIATONIC_SCALES.includes(scale)) {
             return false
         }
         if (!alterations) {

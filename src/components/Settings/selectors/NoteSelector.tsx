@@ -1,6 +1,6 @@
 import React from 'react'
-import { Note, noteName } from '../../../common/types.ts'
-import { ALL_NOTES } from '../../../common/constants.ts'
+import { Note } from '../../../common/types.ts'
+import { ALL_NOTES, noteName } from '../../../common/constants.ts'
 import { Selector } from './Selector.tsx'
 
 interface NoteSelectorProps {

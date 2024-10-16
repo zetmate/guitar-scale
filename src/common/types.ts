@@ -13,51 +13,6 @@ export enum Note {
     'G#/Ab',
 }
 
-export const noteName: Record<Note, string> = {
-    [Note.A]: 'A',
-    [Note['A#/Bb']]: 'A#/Bb',
-    [Note.B]: 'B',
-    [Note.C]: 'C',
-    [Note['C#/Db']]: 'C#/Db',
-    [Note.D]: 'D',
-    [Note['D#/Eb']]: 'D#/Eb',
-    [Note.E]: 'E',
-    [Note.F]: 'F',
-    [Note['F#/Gb']]: 'F#/Gb',
-    [Note.G]: 'G',
-    [Note['G#/Ab']]: 'G#/Ab',
-}
-
-export const noteNameFlat: Record<Note, string> = {
-    [Note.A]: 'A',
-    [Note['A#/Bb']]: 'B♭',
-    [Note.B]: 'B',
-    [Note.C]: 'C',
-    [Note['C#/Db']]: 'D♭',
-    [Note.D]: 'D',
-    [Note['D#/Eb']]: 'E♭',
-    [Note.E]: 'E',
-    [Note.F]: 'F',
-    [Note['F#/Gb']]: 'G♭',
-    [Note.G]: 'G',
-    [Note['G#/Ab']]: 'A♭',
-}
-
-export const noteNameSharp: Record<Note, string> = {
-    [Note.A]: 'A',
-    [Note['A#/Bb']]: 'A♯',
-    [Note.B]: 'B',
-    [Note.C]: 'C',
-    [Note['C#/Db']]: 'C♯',
-    [Note.D]: 'D',
-    [Note['D#/Eb']]: 'D♯',
-    [Note.E]: 'E',
-    [Note.F]: 'F',
-    [Note['F#/Gb']]: 'F♯',
-    [Note.G]: 'G',
-    [Note['G#/Ab']]: 'G♯',
-}
-
 export type ScaleSchema = number[]
 
 export enum Scale {

@@ -1,5 +1,11 @@
 import { AlteredScale, AnyScale, Color, Note, Scale } from './types.ts'
 
+export const FLAT = '♭'
+export const SHARP = '♯'
+export const DOUBLE_SHARP = '𝄪'
+export const DOUBLE_FLAT = '𝄫'
+export const NATURAL = '♮'
+
 export const DEFAULT_STRING_NOTES = [
     Note.E,
     Note.B,
@@ -42,12 +48,17 @@ export const ALL_NOTES = [
     Note['G#/Ab'],
 ] as const
 
-export const SCALES_WITHOUT_DEGREES: AnyScale[] = [
+export const BASE_DIATONIC_SCALES: AnyScale[] = [
+    Scale.Major,
+    Scale.NaturalMinor,
+]
+
+export const NON_DIATONIC_SCALES: AnyScale[] = [
     Scale.Wholetone,
     Scale.Octatonic,
 ]
 
-export const ALL_ALTERED_SCALES = new Set([
+export const DIATONIC_ALTERED_SCALES = new Set([
     AlteredScale.HarmonicMinor,
     AlteredScale.DoubleHarmonic,
     AlteredScale.Locrian,
@@ -56,6 +67,13 @@ export const ALL_ALTERED_SCALES = new Set([
     AlteredScale.Phrygian,
     AlteredScale.Mixolydian,
 ])
+
+export const ALL_ALTERED_SCALES = new Set([...DIATONIC_ALTERED_SCALES])
+
+export const ALL_DIATONIC_SCALES: AnyScale[] = [
+    ...BASE_DIATONIC_SCALES,
+    ...ALL_ALTERED_SCALES,
+]
 
 export const ALL_SCALES = [
     Scale.Major,
@@ -82,3 +100,48 @@ export const MIN_STRINGS = 4
 export const NUMBER_OF_FRETS = 24
 
 export const ICON_SIZE = 32
+
+export const noteName: Record<Note, string> = {
+    [Note.A]: 'A',
+    [Note['A#/Bb']]: 'A#/Bb',
+    [Note.B]: 'B',
+    [Note.C]: 'C',
+    [Note['C#/Db']]: 'C#/Db',
+    [Note.D]: 'D',
+    [Note['D#/Eb']]: 'D#/Eb',
+    [Note.E]: 'E',
+    [Note.F]: 'F',
+    [Note['F#/Gb']]: 'F#/Gb',
+    [Note.G]: 'G',
+    [Note['G#/Ab']]: 'G#/Ab',
+}
+
+export const noteNameFlat: Record<Note, string> = {
+    [Note.A]: 'A',
+    [Note['A#/Bb']]: 'B♭',
+    [Note.B]: 'B',
+    [Note.C]: 'C',
+    [Note['C#/Db']]: 'D♭',
+    [Note.D]: 'D',
+    [Note['D#/Eb']]: 'E♭',
+    [Note.E]: 'E',
+    [Note.F]: 'F',
+    [Note['F#/Gb']]: 'G♭',
+    [Note.G]: 'G',
+    [Note['G#/Ab']]: 'A♭',
+}
+
+export const noteNameSharp: Record<Note, string> = {
+    [Note.A]: 'A',
+    [Note['A#/Bb']]: 'A♯',
+    [Note.B]: 'B',
+    [Note.C]: 'C',
+    [Note['C#/Db']]: 'C♯',
+    [Note.D]: 'D',
+    [Note['D#/Eb']]: 'D♯',
+    [Note.E]: 'E',
+    [Note.F]: 'F',
+    [Note['F#/Gb']]: 'F♯',
+    [Note.G]: 'G',
+    [Note['G#/Ab']]: 'G♯',
+}

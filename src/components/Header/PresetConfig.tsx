@@ -2,7 +2,6 @@ import React, { useCallback } from 'react'
 import { Button, Flex } from '@radix-ui/themes'
 import { DownloadIcon, UploadIcon } from '@radix-ui/react-icons'
 import { useSettings } from '../Settings/useSettings.ts'
-import { getNoteName } from '../../common/utils.ts'
 
 const PRESET_EXTENSION = 'gss'
 
@@ -11,7 +10,7 @@ export const PresetConfig = React.memo(() => {
     const {
         preset,
         setSettings,
-        scale: { preferredNaming },
+        scale: { noteNameMap },
     } = useSettings()
 
     const onDownload = () => {
@@ -24,7 +23,8 @@ export const PresetConfig = React.memo(() => {
         const url = URL.createObjectURL(blob)
 
         const downloadLink = document.createElement('a')
-        const rootNoteName = getNoteName(preset.scale.root, preferredNaming)
+        const rootNoteName = noteNameMap[preset.scale.root]
+
         downloadLink.download = `${preset.scale.type} (${rootNoteName}).${PRESET_EXTENSION}`
         downloadLink.href = url
         downloadLink.style.display = 'none'
