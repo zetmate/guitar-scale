@@ -1,6 +1,6 @@
 import { Note } from '../../common/types.ts'
 import { NUMBER_OF_FRETS } from '../../common/constants.ts'
-import { getIntervalNoteFrom, getNoteName } from '../../common/utils.ts'
+import { getIntervalNoteFrom } from '../../common/utils.ts'
 import { Badge, Text } from '@radix-ui/themes'
 import { Fret } from './Fret.tsx'
 import React, { useMemo } from 'react'
@@ -26,7 +26,7 @@ const getFretboard = (stringNote: Note) => {
 export const String = React.memo(({ stringNote }: StringProps) => {
     const { scale, color } = useSettings()
     const fretboard = useMemo(() => getFretboard(stringNote), [stringNote])
-    const noteName = getNoteName(stringNote, scale.preferredNaming)
+    const noteName = scale.noteNameMap[stringNote]
     const isHighlighted = scale.notesSet.has(stringNote)
 
     return (

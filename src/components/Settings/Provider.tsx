@@ -11,6 +11,7 @@ import React, { PropsWithChildren, useMemo, useState } from 'react'
 import {
     getAlterationsSet,
     getAlteredScaleNotes,
+    getNoteNameMap,
     getPreferredNaming,
     getScaleDegreeInfo,
     getScaleNotes,
@@ -45,7 +46,7 @@ type SettingsUpdater = (prevSettings: Settings) => Settings
 export interface SettingsContextValue extends Settings {
     scale: Settings['scale'] & {
         notes: Note[]
-        noteNameMap: Map<Note, string>
+        noteNameMap: Record<Note, string>
         notesSet: Set<Note>
         degreesInfo: ScaleDegreesInfo
         baseNaming: 'flat' | 'sharp' | null
@@ -83,6 +84,8 @@ const contextValueFromSettings = (
         ? getAlteredScaleNotes(root, type)
         : getScaleNotes(settings.scale.root, type)
 
+    const notesSet = new Set<Note>(notes)
+
     const baseScale = isAltered ? alteredScaleData[type].base : type
     const baseScaleInfo = getScaleInfo(baseScale, root)
     const alteredScaleInfo = isAltered ? alteredScaleData[type] : null
@@ -96,13 +99,20 @@ const contextValueFromSettings = (
         scale: {
             ...settings.scale,
             notes,
-            notesSet: new Set<Note>(notes),
+            notesSet,
             baseNaming: getPreferredNaming(baseScaleInfo),
             degreesInfo: getScaleDegreeInfo(
                 type,
                 notes,
                 alteredScaleInfo?.alterations
             ),
+            noteNameMap: getNoteNameMap({
+                scaleType: type,
+                notes,
+                baseNotes,
+                preferredNaming: getPreferredNaming(baseScaleInfo),
+                alterations: alteredScaleInfo?.alterations || null,
+            }),
             alteredScaleInfo,
             alterationsSet: alteredScaleInfo
                 ? getAlterationsSet(alteredScaleInfo, notes)

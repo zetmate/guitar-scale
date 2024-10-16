@@ -19,6 +19,7 @@ import {
     noteNameSharp,
     NON_DIATONIC_SCALES,
     SHARP,
+    ALL_DIATONIC_SCALES,
 } from './constants.ts'
 import { alteredScaleData, scaleSchema } from './scaleDefinitions.ts'
 
@@ -65,26 +66,25 @@ export const capitalize = (str: string) => {
 }
 
 export const getNoteNameMap = ({
+    scaleType,
     preferredNaming,
     baseNotes,
     alterations,
     notes,
 }: {
-    preferredNaming: 'flat' | 'sharp' | null
+    scaleType: AnyScale
+    preferredNaming: 'flat' | 'sharp'
     baseNotes: Note[]
     notes: Note[]
     alterations: AlteredScaleInfo['alterations'] | null
 }): Record<Note, string> => {
     const baseNamesObj =
-        preferredNaming === 'flat'
-            ? noteNameFlat
-            : preferredNaming === 'sharp'
-              ? noteNameSharp
-              : null
+        preferredNaming === 'flat' ? noteNameFlat : noteNameSharp
+
+    const alteredNames: Record<Note, string> = { ...baseNamesObj }
 
     // Check alterations and add double-flat / sharp
-    if (baseNamesObj) {
-        const alteredNames: Record<Note, string> = { ...baseNamesObj }
+    if (ALL_DIATONIC_SCALES.includes(scaleType)) {
         alterations?.forEach((alt, degree) => {
             const baseNote = baseNotes[degree]
             const note = notes[degree]
@@ -109,27 +109,21 @@ export const getNoteNameMap = ({
             }
         })
         return alteredNames
-    } else {
-        const scaleNoteNameMap: Record<Note, string> = {}
-        // non-diatonic scales
-        notes.forEach((note, index) => {
-            if (index === 0) {
-                return // continue
-            }
-        })
     }
+
+    return alteredNames
 }
 
 export const getPreferredNaming = (
     baseScaleInfo: BaseScaleInfo | null
-): 'flat' | 'sharp' | null => {
+): 'flat' | 'sharp' => {
     if (!baseScaleInfo) {
         return 'sharp'
     }
     if (baseScaleInfo.sign) {
         return baseScaleInfo.sign
     }
-    return null
+    return 'sharp'
 }
 
 export const getAlterationsSet = (

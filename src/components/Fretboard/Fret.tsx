@@ -2,7 +2,6 @@ import React, { useMemo } from 'react'
 import { Badge, Text } from '@radix-ui/themes'
 import { Degree, Note } from '../../common/types.ts'
 import { useSettings } from '../Settings/useSettings.ts'
-import { getNoteName } from '../../common/utils.ts'
 
 interface FretProps {
     note: Note
@@ -10,7 +9,7 @@ interface FretProps {
 
 export const Fret = React.memo(({ note }: FretProps) => {
     const {
-        scale: { notesSet, preferredNaming, alterationsSet, degreesInfo },
+        scale: { notesSet, noteNameMap, alterationsSet, degreesInfo },
         color,
         showAllNotes,
     } = useSettings()
@@ -59,7 +58,7 @@ export const Fret = React.memo(({ note }: FretProps) => {
         notesSet,
     ])
 
-    const noteName = getNoteName(note, preferredNaming)
+    const noteName = noteNameMap[note]
     return (
         <div>
             {noteColor ? (

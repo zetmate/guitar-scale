@@ -62,6 +62,13 @@ export const getScaleInfo = (scale: Scale, baseNote: Note) => {
             baseNote,
             scale,
         }
+    } else if (scale === Scale.Wholetone) {
+        return {
+            sign: 'sharp' as const,
+            numberOfSigns: 0,
+            baseNote,
+            scale,
+        }
     }
     return null
 }
