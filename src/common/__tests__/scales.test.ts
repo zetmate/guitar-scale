@@ -4,7 +4,8 @@ import {
     SHARP_MAJOR_SCALES,
     SHARP_MINOR_SCALES,
 } from '../scaleSignsInfo.ts'
-import { Note, noteName, Scale } from '../types.ts'
+import { Note, Scale } from '../types.ts'
+import { noteName } from '../constants.ts'
 
 describe('Constants for scales', () => {
     describe('Major scales', () => {
