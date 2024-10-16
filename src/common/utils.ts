@@ -10,11 +10,14 @@ import {
 } from './types.ts'
 import {
     ALL_ALTERED_SCALES,
+    DOUBLE_FLAT,
+    DOUBLE_SHARP,
     FLAT,
     Interval,
+    NATURAL,
     noteNameFlat,
     noteNameSharp,
-    SCALES_WITHOUT_DEGREES,
+    NON_DIATONIC_SCALES,
     SHARP,
 } from './constants.ts'
 import { alteredScaleData, scaleSchema } from './scaleDefinitions.ts'
@@ -79,10 +82,9 @@ export const getNoteNameMap = ({
               ? noteNameSharp
               : null
 
-    const alteredNames: Record<Note, string> = { ...baseNamesObj }
-
     // Check alterations and add double-flat / sharp
     if (baseNamesObj) {
+        const alteredNames: Record<Note, string> = { ...baseNamesObj }
         alterations?.forEach((alt, degree) => {
             const baseNote = baseNotes[degree]
             const note = notes[degree]
@@ -90,15 +92,17 @@ export const getNoteNameMap = ({
 
             if (alt === 'flat') {
                 if (baseName.endsWith(SHARP)) {
-                    // TODO: add bekar
-                    alteredNames[note] = baseName[0]
+                    alteredNames[note] = NATURAL + baseName[0]
+                } else if (baseName.endsWith(FLAT)) {
+                    alteredNames[note] = baseName[0] + DOUBLE_FLAT
                 } else {
                     alteredNames[note] = baseName + FLAT
                 }
             } else if (alt === 'sharp') {
                 if (baseName.endsWith(FLAT)) {
-                    // TODO: add bekar
-                    alteredNames[note] = baseName[0]
+                    alteredNames[note] = NATURAL + baseName[0]
+                } else if (baseName.endsWith(SHARP)) {
+                    alteredNames[note] = baseName[0] + DOUBLE_SHARP
                 } else {
                     alteredNames[note] = baseName + SHARP
                 }
@@ -106,12 +110,12 @@ export const getNoteNameMap = ({
         })
         return alteredNames
     } else {
-        // octo and whole-tone scale
+        const scaleNoteNameMap: Record<Note, string> = {}
+        // non-diatonic scales
         notes.forEach((note, index) => {
             if (index === 0) {
                 return // continue
             }
-            const prevNoteName =
         })
     }
 }
@@ -151,7 +155,7 @@ export const getScaleDegreeInfo = (
     alterations?: AlteredScaleInfo['alterations']
 ): ScaleDegreesInfo => {
     const checkHasDegree = (degree: Degree) => {
-        if (SCALES_WITHOUT_DEGREES.includes(scale)) {
+        if (NON_DIATONIC_SCALES.includes(scale)) {
             return false
         }
         if (!alterations) {

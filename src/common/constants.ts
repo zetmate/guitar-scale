@@ -4,6 +4,7 @@ export const FLAT = '♭'
 export const SHARP = '♯'
 export const DOUBLE_SHARP = '𝄪'
 export const DOUBLE_FLAT = '𝄫'
+export const NATURAL = '♮'
 
 export const DEFAULT_STRING_NOTES = [
     Note.E,
@@ -47,12 +48,17 @@ export const ALL_NOTES = [
     Note['G#/Ab'],
 ] as const
 
-export const SCALES_WITHOUT_DEGREES: AnyScale[] = [
+export const BASE_DIATONIC_SCALES: AnyScale[] = [
+    Scale.Major,
+    Scale.NaturalMinor,
+]
+
+export const NON_DIATONIC_SCALES: AnyScale[] = [
     Scale.Wholetone,
     Scale.Octatonic,
 ]
 
-export const ALL_ALTERED_SCALES = new Set([
+export const DIATONIC_ALTERED_SCALES = new Set([
     AlteredScale.HarmonicMinor,
     AlteredScale.DoubleHarmonic,
     AlteredScale.Locrian,
@@ -61,6 +67,13 @@ export const ALL_ALTERED_SCALES = new Set([
     AlteredScale.Phrygian,
     AlteredScale.Mixolydian,
 ])
+
+export const ALL_ALTERED_SCALES = new Set([...DIATONIC_ALTERED_SCALES])
+
+export const ALL_DIATONIC_SCALES: AnyScale[] = [
+    ...BASE_DIATONIC_SCALES,
+    ...ALL_ALTERED_SCALES,
+]
 
 export const ALL_SCALES = [
     Scale.Major,
