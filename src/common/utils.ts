@@ -71,13 +71,19 @@ export const getNoteNameMap = ({
     baseNotes,
     alterations,
     notes,
+    academicNotation,
 }: {
     scaleType: AnyScale
     preferredNaming: 'flat' | 'sharp'
     baseNotes: Note[]
     notes: Note[]
     alterations: AlteredScaleInfo['alterations'] | null
-}): Record<Note, string> => {
+    academicNotation: boolean
+}): {
+    noteNameMap: Record<Note, string>
+    containsAcademicNotation: boolean
+} => {
+    let containsAcademicNotation = false
     const baseNamesObj =
         preferredNaming === 'flat' ? noteNameFlat : noteNameSharp
 
@@ -92,26 +98,38 @@ export const getNoteNameMap = ({
 
             if (alt === 'flat') {
                 if (baseName.endsWith(SHARP)) {
-                    alteredNames[note] = NATURAL + baseName[0]
+                    containsAcademicNotation = true
+                    if (academicNotation) {
+                        alteredNames[note] = NATURAL + baseName[0]
+                    }
                 } else if (baseName.endsWith(FLAT)) {
-                    alteredNames[note] = baseName[0] + DOUBLE_FLAT
+                    containsAcademicNotation = true
+                    if (academicNotation) {
+                        alteredNames[note] = baseName[0] + DOUBLE_FLAT
+                    }
                 } else {
                     alteredNames[note] = baseName + FLAT
                 }
             } else if (alt === 'sharp') {
                 if (baseName.endsWith(FLAT)) {
-                    alteredNames[note] = NATURAL + baseName[0]
+                    containsAcademicNotation = true
+                    if (academicNotation) {
+                        alteredNames[note] = NATURAL + baseName[0]
+                    }
                 } else if (baseName.endsWith(SHARP)) {
-                    alteredNames[note] = baseName[0] + DOUBLE_SHARP
+                    containsAcademicNotation = true
+                    if (academicNotation) {
+                        alteredNames[note] = baseName[0] + DOUBLE_SHARP
+                    }
                 } else {
                     alteredNames[note] = baseName + SHARP
                 }
             }
         })
-        return alteredNames
+        return { noteNameMap: alteredNames, containsAcademicNotation }
     }
 
-    return alteredNames
+    return { noteNameMap: alteredNames, containsAcademicNotation }
 }
 
 export const getPreferredNaming = (

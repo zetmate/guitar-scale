@@ -34,6 +34,7 @@ export interface Settings {
         dominant: Color
         subdominant: Color
     }
+    academicNotation: boolean
     showAllNotes: boolean
     scale: {
         root: Note
@@ -52,6 +53,7 @@ export interface SettingsContextValue extends Settings {
         baseNaming: 'flat' | 'sharp' | null
         alteredScaleInfo?: AlteredScaleInfo | null
         alterationsSet: Set<Note>
+        containsAcademicNotation: boolean
     }
     preset: Settings
     setSettings: (updater: SettingsUpdater) => void
@@ -61,6 +63,7 @@ const defaultSettings: Settings = {
     theme: defaultTheme,
     tuning: [Note.E, Note.B, Note.G, Note.D, Note.A, Note.E],
     showAllNotes: false,
+    academicNotation: false,
     color: {
         default: 'blue',
         alterations: 'orange',
@@ -93,6 +96,15 @@ const contextValueFromSettings = (
         ? getScaleNotes(settings.scale.root, baseScale)
         : notes
 
+    const { noteNameMap, containsAcademicNotation } = getNoteNameMap({
+        scaleType: type,
+        notes,
+        baseNotes,
+        preferredNaming: getPreferredNaming(baseScaleInfo),
+        alterations: alteredScaleInfo?.alterations || null,
+        academicNotation: settings.academicNotation,
+    })
+
     return {
         ...settings,
         preset: settings,
@@ -106,13 +118,8 @@ const contextValueFromSettings = (
                 notes,
                 alteredScaleInfo?.alterations
             ),
-            noteNameMap: getNoteNameMap({
-                scaleType: type,
-                notes,
-                baseNotes,
-                preferredNaming: getPreferredNaming(baseScaleInfo),
-                alterations: alteredScaleInfo?.alterations || null,
-            }),
+            noteNameMap,
+            containsAcademicNotation,
             alteredScaleInfo,
             alterationsSet: alteredScaleInfo
                 ? getAlterationsSet(alteredScaleInfo, notes)
