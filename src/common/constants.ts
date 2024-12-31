@@ -66,6 +66,7 @@ export const DIATONIC_ALTERED_SCALES = new Set([
     AlteredScale.Lydian,
     AlteredScale.Phrygian,
     AlteredScale.Mixolydian,
+    AlteredScale.Eclipse,
 ])
 
 export const ALL_ALTERED_SCALES = new Set([...DIATONIC_ALTERED_SCALES])

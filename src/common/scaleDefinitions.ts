@@ -55,4 +55,12 @@ export const alteredScaleData: Record<AlteredScale, AlteredScaleInfo> = {
         base: Scale.Major,
         alterations: new Map([[Degree.V, 'flat']]),
     },
+    [AlteredScale.Eclipse]: {
+        name: AlteredScale.Eclipse,
+        base: Scale.Major,
+        alterations: new Map([
+            [Degree.II, 'flat'],
+            [Degree.V, 'sharp'],
+        ]),
+    },
 }

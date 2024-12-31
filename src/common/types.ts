@@ -29,7 +29,8 @@ export enum AlteredScale {
     Locrian = 'locrian',
     Lydian = 'lydian',
     Dorian = 'dorian',
-    Mixolydian = 'mixolydian mode',
+    Mixolydian = 'mixolydian',
+    Eclipse = 'eclipse',
 }
 
 export type AnyScale = Scale | AlteredScale
