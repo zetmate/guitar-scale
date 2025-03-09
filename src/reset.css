@@ -16,7 +16,7 @@
   4. Improve text rendering
 */
 body {
-    min-width: 500px;
+    min-width: 720px;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
 }
