@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { useSettings } from './useSettings.ts'
-import { Button, IconButton, Text } from '@radix-ui/themes'
+import { Button, Flex, IconButton, Text } from '@radix-ui/themes'
 import {
     DEFAULT_STRING_NOTES,
     MAX_STRINGS,
@@ -10,6 +10,7 @@ import { Note } from '../../common/types.ts'
 import { StringNoteSelector } from './selectors/StringNoteSelector.tsx'
 import { getIntervalNoteFrom } from '../../common/utils.ts'
 import { MinusIcon, PlusIcon } from '@radix-ui/react-icons'
+import { defaultSettings } from './Provider.tsx'
 
 const addOrRemoveString = (prevTuning: Note[], action: 'add' | 'remove') => {
     if (action === 'remove') {
@@ -51,17 +52,26 @@ export const Tuning = React.memo(() => {
         [setSettings]
     )
 
+    const onReset = useCallback(() => {
+        setSettings((prevSettings) => ({
+            ...prevSettings,
+            tuning: defaultSettings.tuning,
+        }))
+    }, [setSettings])
+
     return (
         <div className="group__column">
-            <div className="group__row flex_row_reverse">
-                {tuning.map((note, index) => (
-                    <StringNoteSelector
-                        key={`${note}_${index}`}
-                        stringIndex={index}
-                    />
-                ))}
-            </div>
-            <div className="group__row">
+            <Flex>
+                <div className="group__row flex_row_reverse">
+                    {tuning.map((note, index) => (
+                        <StringNoteSelector
+                            key={`${note}_${index}`}
+                            stringIndex={index}
+                        />
+                    ))}
+                </div>
+            </Flex>
+            <Flex gapX="6">
                 <div className="string_buttons">
                     <Button
                         variant="soft"
@@ -97,7 +107,10 @@ export const Tuning = React.memo(() => {
                         <PlusIcon />
                     </IconButton>
                 </div>
-            </div>
+                <Button variant="soft" color="red" onClick={onReset}>
+                    Reset tuning
+                </Button>
+            </Flex>
         </div>
     )
 })

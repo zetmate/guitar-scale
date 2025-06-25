@@ -59,7 +59,7 @@ export interface SettingsContextValue extends Settings {
     setSettings: (updater: SettingsUpdater) => void
 }
 
-const defaultSettings: Settings = {
+export const defaultSettings: Settings = {
     theme: defaultTheme,
     tuning: [Note.E, Note.B, Note.G, Note.D, Note.A, Note.E],
     showAllNotes: false,
