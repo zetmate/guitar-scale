@@ -71,7 +71,7 @@ export const Tuning = React.memo(() => {
                     ))}
                 </div>
             </Flex>
-            <Flex gapX="6">
+            <Flex gapX="5">
                 <div className="string_buttons">
                     <Button
                         variant="soft"
